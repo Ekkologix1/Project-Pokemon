@@ -1,4 +1,4 @@
-import './WildPokemon.css'
+import './Animations/WildPokemon.css'
 
 function WildPokemon({ currentPokemon, onEncounter, onCapture, isLoading, isCapturing }) {
 const getTypeColor = (type) => {

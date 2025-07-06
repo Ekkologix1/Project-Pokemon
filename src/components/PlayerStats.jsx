@@ -1,4 +1,4 @@
-import './PlayerStats.css'
+import './Animations/PlayerStats.css'
 
 function PlayerStats({ playerData }) {
 if (!playerData) return null

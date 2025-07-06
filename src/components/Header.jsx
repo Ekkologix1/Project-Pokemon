@@ -1,4 +1,4 @@
-import './Header.css'
+import './Animations/Header.css'
 
 function Header() {
 return (

@@ -1,4 +1,4 @@
-import './Collection.css'
+import './Animations/Collection.css'
 
 function Collection({ collection }) {
 const uniquePokemon = collection.reduce((unique, pokemon) => {
