@@ -1,33 +1,10 @@
-import './Missions.css'
+import React from 'react'
 
-function Missions({ missions, playerData }) {
-if (!missions || missions.length === 0) {
-    return (
-    <div className="missions">
-        <h3>🎯 Misiones</h3>
-        <div className="no-missions">
-        No hay misiones disponibles
-        </div>
-    </div>
-    )
-}
-
-const getMissionIcon = (type) => {
-    switch (type) {
-    case 'catch': return '🎣'
-    case 'encounter': return '🔍'
-    case 'level': return '⭐'
-    default: return '🎯'
-    }
-}
-
+const Missions = ({ missions, playerData }) => {
 const calculateProgress = (mission) => {
-    if (!playerData) return 0
-    
     let progress = 0
     switch (mission.type) {
     case 'catch':
-        // Contar Pokémon únicos
         progress = playerData.collection.reduce((unique, pokemon) => {
         if (!unique.some(p => p.id === pokemon.id)) {
             unique.push(pokemon)
@@ -44,18 +21,18 @@ const calculateProgress = (mission) => {
     default:
         progress = 0
     }
-    
     return Math.min(progress, mission.target)
 }
 
 const isCompleted = (mission) => {
-    return playerData && playerData.completedMissions.includes(mission.id)
+    return playerData.completedMissions.includes(mission.id)
 }
 
 return (
-    <div className="missions">
-    <h3>🎯 Misiones</h3>
-    <div className="missions-list">
+    <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-6 shadow-xl border-4 border-purple-300">
+    <h2 className="text-2xl font-bold text-center mb-6 text-purple-800">🎯 Misiones</h2>
+    
+    <div className="space-y-4">
         {missions.map(mission => {
         const progress = calculateProgress(mission)
         const completed = isCompleted(mission)
@@ -64,26 +41,34 @@ return (
         return (
             <div 
             key={mission.id} 
-            className={`mission-card ${completed ? 'completed' : ''}`}
+            className={`bg-white rounded-xl p-4 shadow-md transition-all duration-300 ${
+                completed ? 'bg-green-50 border-2 border-green-300' : 'hover:shadow-lg'
+            }`}
             >
-            <div className="mission-title">
-                {getMissionIcon(mission.type)} {mission.title}
+            <div className="flex items-center justify-between mb-3">
+                <h3 className="font-bold text-gray-800">{mission.title}</h3>
+                {completed && <span className="text-green-500 text-xl">✅</span>}
             </div>
-            <div className="mission-description">
-                {mission.description}
-            </div>
-            <div className="mission-progress">
-                <div className="progress-bar">
+            
+            <p className="text-sm text-gray-600 mb-3">{mission.description}</p>
+            
+            <div className="mb-3">
+                <div className="bg-gray-200 rounded-full h-2 mb-2">
                 <div 
-                    className="progress-fill" 
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                    completed ? 'bg-green-500' : 'bg-blue-500'
+                    }`}
                     style={{ width: `${progressPercentage}%` }}
                 />
                 </div>
-                <div className="progress-text">
+                <div className="text-xs text-gray-500 text-center">
                 {progress}/{mission.target} {completed ? '✓ Completada' : ''}
                 </div>
             </div>
-            <div className="mission-reward">
+            
+            <div className={`text-sm font-bold px-3 py-1 rounded-full text-center ${
+                completed ? 'bg-green-500 text-white' : 'bg-yellow-400 text-gray-800'
+            }`}>
                 {completed ? '🎉 Recompensa obtenida' : `💰 ${mission.reward} EXP`}
             </div>
             </div>

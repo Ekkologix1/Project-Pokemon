@@ -1,65 +1,38 @@
-import { useState, useEffect } from 'react'
-import './Notification.css'
+import React, { useState, useEffect } from 'react'
 
-function Notification({ notification }) {
+const Notification = ({ notification }) => {
 const [isVisible, setIsVisible] = useState(false)
-const [isHiding, setIsHiding] = useState(false)
 
 useEffect(() => {
     if (notification) {
     setIsVisible(true)
-    setIsHiding(false)
-    
-      // Auto-hide después de 3 segundos
-    const timer = setTimeout(() => {
-        handleHide()
-    }, 3000)
-    
+    const timer = setTimeout(() => setIsVisible(false), 3000)
     return () => clearTimeout(timer)
-    } else {
-    setIsVisible(false)
-    setIsHiding(false)
     }
 }, [notification])
 
-const handleHide = () => {
-    setIsHiding(true)
-    setTimeout(() => {
-    setIsVisible(false)
-    }, 300)
-}
+if (!notification || !isVisible) return null
 
-const getNotificationIcon = (type) => {
+const getNotificationStyles = (type) => {
     switch (type) {
-    case 'success': return '✅'
-    case 'error': return '❌'
-    case 'warning': return '⚠️'
-    case 'info': return 'ℹ️'
-    default: return '📢'
+    case 'success':
+        return 'bg-gradient-to-r from-green-400 to-blue-500 text-white'
+    case 'error':
+        return 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
+    case 'warning':
+        return 'bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900'
+    default:
+        return 'bg-gradient-to-r from-blue-400 to-purple-500 text-white'
     }
 }
 
-if (!notification || !isVisible) return null
-
 return (
-    <div 
-    className={`notification ${notification.type} ${isHiding ? 'hiding' : ''}`}
-    onClick={handleHide}
-    >
-    <div className="notification-content">
-        <div className="notification-icon">
-        {getNotificationIcon(notification.type)}
-        </div>
-        <div className="notification-message">
-        {notification.message}
-        </div>
-        <button 
-        className="notification-close"
-        onClick={handleHide}
-        aria-label="Cerrar notificación"
-        >
-        ×
-        </button>
+    <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-300 ${getNotificationStyles(notification.type)} ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}>
+    <div className="flex items-center gap-2">
+        <span className="text-lg">
+        {notification.type === 'success' ? '✅' : notification.type === 'error' ? '❌' : '📢'}
+        </span>
+        <span className="font-semibold">{notification.message}</span>
     </div>
     </div>
 )
