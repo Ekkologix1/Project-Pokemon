@@ -1,4 +1,4 @@
-import './Animations/Missions.css'
+import './Missions.css'
 
 function Missions({ missions, playerData }) {
 if (!missions || missions.length === 0) {
