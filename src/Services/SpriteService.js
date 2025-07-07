@@ -368,4 +368,4 @@ class SpriteService {
 // Crear instancia singleton
 const spriteService = new SpriteService()
 
-export default spriteService
+export default SpriteService
