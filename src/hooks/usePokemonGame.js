@@ -16,6 +16,7 @@ export function usePokemonGame() {
   const [notification, setNotification] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isCapturing, setIsCapturing] = useState(false)
+  const [captureResult, setCaptureResult] = useState(null) // 'success', 'failed', o null
 
   const API_URL = 'https://pokeapi.co/api/v2/pokemon/'
   const MAX_POKEMON_ID = 898
@@ -165,6 +166,7 @@ export function usePokemonGame() {
   // Encontrar Pokémon salvaje
   const encounterWildPokemon = useCallback(async () => {
     setIsLoading(true)
+    setCaptureResult(null) // Resetear resultado anterior
     
     try {
       const randomId = Math.floor(Math.random() * MAX_POKEMON_ID) + 1
@@ -209,12 +211,15 @@ export function usePokemonGame() {
     if (!currentPokemon || isCapturing) return
 
     setIsCapturing(true)
+    setCaptureResult(null)
 
     // Simular intento de captura
     setTimeout(() => {
       const success = Math.random() < 0.7 // 70% de probabilidad de éxito
       
       if (success) {
+        setCaptureResult('success')
+        
         setPlayerData(currentData => {
           const alreadyCaught = currentData.collection.some(p => p.id === currentPokemon.id)
           
@@ -241,8 +246,11 @@ export function usePokemonGame() {
         showNotification('¡Pokémon capturado!', 'success')
         
         // Buscar nuevo Pokémon automáticamente
-        setTimeout(() => encounterWildPokemon(), 1000)
+        setTimeout(() => {
+          encounterWildPokemon()
+        }, 1000)
       } else {
+        setCaptureResult('failed')
         showNotification('¡El Pokémon escapó!', 'error')
       }
       
@@ -274,6 +282,7 @@ export function usePokemonGame() {
     encounterWildPokemon,
     attemptCapture,
     isLoading,
-    isCapturing
+    isCapturing,
+    captureResult // Nuevo estado para el resultado de captura
   }
 }
