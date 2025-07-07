@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import SpriteService from './Services/SpriteService.js'
+import spriteService from "../Services/SpriteService.js";
 
 const PokemonImage = ({ 
   pokemon, 
