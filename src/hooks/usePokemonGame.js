@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 
 export function usePokemonGame() {
   // Estado inicial con datos por defecto
@@ -17,19 +17,21 @@ export function usePokemonGame() {
   const [isLoading, setIsLoading] = useState(false)
   const [isCapturing, setIsCapturing] = useState(false)
   const [captureResult, setCaptureResult] = useState(null)
-  const [isInitialized, setIsInitialized] = useState(false)
+  const [gameReady, setGameReady] = useState(false)
 
   const API_URL = 'https://pokeapi.co/api/v2/pokemon/'
-  const MAX_POKEMON_ID = 1010 // Actualizado para incluir más Pokémon
+  const MAX_POKEMON_ID = 1010
 
   // Mostrar notificación
-  const showNotification = useCallback((message, type = 'success') => {
+  const showNotification = (message, type = 'success') => {
+    console.log(`[NOTIFICATION] ${type}: ${message}`)
     setNotification({ message, type })
     setTimeout(() => setNotification(null), 3000)
-  }, [])
+  }
 
   // Inicializar misiones
-  const initializeMissions = useCallback(() => {
+  const initializeMissions = () => {
+    console.log('[MISSIONS] Inicializando misiones...')
     return [
       {
         id: 'first_catch',
@@ -77,10 +79,11 @@ export function usePokemonGame() {
         progress: 0
       }
     ]
-  }, [])
+  }
 
   // Añadir experiencia
-  const addExp = useCallback((amount) => {
+  const addExp = (amount) => {
+    console.log(`[EXP] Añadiendo ${amount} experiencia`)
     setPlayerData(currentData => {
       const newExp = currentData.exp + amount
       const expForNextLevel = currentData.level * 100
@@ -93,10 +96,11 @@ export function usePokemonGame() {
       
       return { ...currentData, exp: newExp }
     })
-  }, [showNotification])
+  }
 
   // Verificar y actualizar misiones
-  const checkMissions = useCallback((data) => {
+  const checkMissions = (data) => {
+    console.log('[MISSIONS] Verificando misiones con datos:', data)
     setMissions(currentMissions => {
       return currentMissions.map(mission => {
         if (data.completedMissions.includes(mission.id)) {
@@ -106,7 +110,6 @@ export function usePokemonGame() {
         let progress = 0
         switch (mission.type) {
           case 'catch':
-            // Contar Pokémon únicos
             progress = data.collection.reduce((unique, pokemon) => {
               if (!unique.some(p => p.id === pokemon.id)) {
                 unique.push(pokemon)
@@ -124,6 +127,7 @@ export function usePokemonGame() {
         
         // Completar misión si alcanzó el objetivo
         if (progress >= mission.target && !data.completedMissions.includes(mission.id)) {
+          console.log(`[MISSIONS] Completando misión: ${mission.title}`)
           setTimeout(() => {
             setPlayerData(prevData => {
               const newData = {
@@ -140,25 +144,27 @@ export function usePokemonGame() {
         return { ...mission, progress }
       })
     })
-  }, [addExp, showNotification])
+  }
 
   // Encontrar Pokémon salvaje
-  const encounterWildPokemon = useCallback(async () => {
+  const encounterWildPokemon = async () => {
+    console.log('[POKEMON] Iniciando búsqueda de Pokémon salvaje...')
     setIsLoading(true)
     setCaptureResult(null)
     
     try {
       const randomId = Math.floor(Math.random() * MAX_POKEMON_ID) + 1
-      console.log('Buscando Pokémon con ID:', randomId)
+      console.log('[POKEMON] Buscando Pokémon con ID:', randomId)
       
       const response = await fetch(`${API_URL}${randomId}`)
+      console.log('[POKEMON] Respuesta de API:', response.status)
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
       
       const pokemon = await response.json()
-      console.log('Pokémon encontrado:', pokemon)
+      console.log('[POKEMON] Pokémon encontrado:', pokemon.name, '#' + pokemon.id)
       
       const pokemonData = {
         id: pokemon.id,
@@ -175,6 +181,7 @@ export function usePokemonGame() {
         }))
       }
       
+      console.log('[POKEMON] Datos del Pokémon procesados:', pokemonData)
       setCurrentPokemon(pokemonData)
       
       // Actualizar encuentros
@@ -184,21 +191,26 @@ export function usePokemonGame() {
           totalEncounters: currentData.totalEncounters + 1
         }
         
+        console.log('[POKEMON] Actualizando encuentros:', newData.totalEncounters)
         setTimeout(() => checkMissions(newData), 100)
         return newData
       })
       
     } catch (error) {
-      console.error('Error fetching Pokemon:', error)
-      showNotification('Error al buscar Pokémon. Intenta de nuevo.', 'error')
+      console.error('[POKEMON] Error fetching Pokemon:', error)
+      showNotification('Error al buscar Pokémon. Intentando con uno de respaldo...', 'error')
       
       // Intentar con un Pokémon de respaldo
       try {
-        const fallbackId = Math.floor(Math.random() * 151) + 1 // Pokémon de la primera generación
+        const fallbackId = Math.floor(Math.random() * 151) + 1
+        console.log('[POKEMON] Intentando con Pokémon de respaldo ID:', fallbackId)
+        
         const fallbackResponse = await fetch(`${API_URL}${fallbackId}`)
         
         if (fallbackResponse.ok) {
           const fallbackPokemon = await fallbackResponse.json()
+          console.log('[POKEMON] Pokémon de respaldo encontrado:', fallbackPokemon.name)
+          
           const pokemonData = {
             id: fallbackPokemon.id,
             name: fallbackPokemon.name,
@@ -223,19 +235,52 @@ export function usePokemonGame() {
             setTimeout(() => checkMissions(newData), 100)
             return newData
           })
+        } else {
+          throw new Error('Fallback también falló')
         }
       } catch (fallbackError) {
-        console.error('Error with fallback Pokemon:', fallbackError)
+        console.error('[POKEMON] Error with fallback Pokemon:', fallbackError)
+        // Crear un Pokémon de ejemplo para evitar que se rompa el juego
+        const examplePokemon = {
+          id: 1,
+          name: 'bulbasaur',
+          image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
+          types: ['grass', 'poison'],
+          height: 7,
+          weight: 69,
+          stats: [
+            { name: 'hp', value: 45 },
+            { name: 'attack', value: 49 },
+            { name: 'defense', value: 49 }
+          ]
+        }
+        
+        console.log('[POKEMON] Usando Pokémon de ejemplo:', examplePokemon.name)
+        setCurrentPokemon(examplePokemon)
+        showNotification('Se encontró un Pokémon de ejemplo', 'success')
+        
+        setPlayerData(currentData => {
+          const newData = {
+            ...currentData,
+            totalEncounters: currentData.totalEncounters + 1
+          }
+          setTimeout(() => checkMissions(newData), 100)
+          return newData
+        })
       }
     } finally {
       setIsLoading(false)
     }
-  }, [checkMissions, showNotification])
+  }
 
   // Intentar capturar Pokémon
-  const attemptCapture = useCallback(async () => {
-    if (!currentPokemon || isCapturing) return
+  const attemptCapture = async () => {
+    if (!currentPokemon || isCapturing) {
+      console.log('[CAPTURE] No se puede capturar - Pokémon:', !!currentPokemon, 'Capturando:', isCapturing)
+      return
+    }
 
+    console.log('[CAPTURE] Iniciando captura de:', currentPokemon.name)
     setIsCapturing(true)
     setCaptureResult(null)
 
@@ -248,6 +293,7 @@ export function usePokemonGame() {
       const captureRate = Math.min(baseRate + levelBonus - rarityPenalty, 0.95)
       
       const success = Math.random() < captureRate
+      console.log('[CAPTURE] Probabilidad:', captureRate, 'Éxito:', success)
       
       if (success) {
         setCaptureResult('success')
@@ -268,6 +314,8 @@ export function usePokemonGame() {
             collection: newCollection
           }
           
+          console.log('[CAPTURE] Pokémon capturado. Nueva colección:', newData.collection.length)
+          
           // Añadir experiencia
           const expAmount = alreadyCaught ? 10 : 25
           setTimeout(() => addExp(expAmount), 500)
@@ -280,6 +328,7 @@ export function usePokemonGame() {
         
         // Buscar nuevo Pokémon después de un momento
         setTimeout(() => {
+          console.log('[CAPTURE] Buscando nuevo Pokémon...')
           encounterWildPokemon()
         }, 2000)
       } else {
@@ -289,29 +338,31 @@ export function usePokemonGame() {
       
       setIsCapturing(false)
     }, 1500)
-  }, [currentPokemon, isCapturing, playerData.level, addExp, checkMissions, showNotification, encounterWildPokemon])
+  }
 
-  // Inicializar el juego
-  useEffect(() => {
-    if (!isInitialized) {
-      console.log('Inicializando juego...')
-      const initialMissions = initializeMissions()
-      setMissions(initialMissions)
-      setIsInitialized(true)
-      
-      // Buscar el primer Pokémon
-      setTimeout(() => {
-        encounterWildPokemon()
-      }, 1000)
-    }
-  }, [isInitialized, initializeMissions, encounterWildPokemon])
+  // Función para huir del encuentro
+  const fleeFromPokemon = () => {
+    console.log('[FLEE] Huyendo del encuentro...')
+    setCurrentPokemon(null)
+    setCaptureResult(null)
+    setTimeout(() => {
+      encounterWildPokemon()
+    }, 1000)
+  }
 
-  // Verificar misiones cuando cambien los datos del jugador
+  // Inicializar el juego - solo una vez
   useEffect(() => {
-    if (playerData && missions.length > 0) {
-      checkMissions(playerData)
-    }
-  }, [playerData.collection.length, playerData.totalEncounters, playerData.level])
+    console.log('[INIT] Inicializando juego...')
+    const initialMissions = initializeMissions()
+    setMissions(initialMissions)
+    setGameReady(true)
+    
+    // Buscar el primer Pokémon
+    setTimeout(() => {
+      console.log('[INIT] Buscando primer Pokémon...')
+      encounterWildPokemon()
+    }, 500)
+  }, []) // Sin dependencias para evitar bucles
 
   return {
     playerData,
@@ -320,8 +371,10 @@ export function usePokemonGame() {
     notification,
     encounterWildPokemon,
     attemptCapture,
+    fleeFromPokemon,
     isLoading,
     isCapturing,
-    captureResult
+    captureResult,
+    gameReady
   }
 }
