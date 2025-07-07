@@ -1,50 +1,98 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PokemonSphere from './PokemonSphere'
+import { getTypeColor, getPokemonRarity, getRarityEmoji } from '../utils/gameUtils'
+import './WildPokemon.css'
 
 const WildPokemon = ({ 
-currentPokemon, 
-onEncounter, 
-onCapture, 
-onPokemonEscape,
-isLoading, 
-isCapturing, 
-captureResult,
-captureAttempts
+  currentPokemon, 
+  onEncounter, 
+  onCapture, 
+  isLoading, 
+  isCapturing, 
+  captureResult 
 }) => {
-  // Calcular probabilidad aproximada de captura
-const calculateDisplayRate = (pokemon, attempts) => {
-    if (!pokemon) return 0
-    let baseRate = 70
-    const attemptPenalty = attempts * 15
-    const rarityPenalty = pokemon.id > 600 ? 20 : pokemon.id > 800 ? 30 : 0
-    return Math.max(10, Math.min(90, baseRate - attemptPenalty - rarityPenalty))
-}
+  const [pokemonEscaped, setPokemonEscaped] = useState(false)
+  const [captureAttempts, setCaptureAttempts] = useState(0)
+  const [showEscapeAnimation, setShowEscapeAnimation] = useState(false)
 
-return (
-    <div className="bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl p-6 shadow-xl border-4 border-green-300">
-    <h2 className="text-2xl font-bold text-center mb-6 text-green-800">
-        🌿 Pokémon Salvaje
-    </h2>
+  // Resetear estado cuando aparece un nuevo Pokémon
+  useEffect(() => {
+    if (currentPokemon) {
+      setCaptureAttempts(0)
+      setPokemonEscaped(false)
+      setShowEscapeAnimation(false)
+    }
+  }, [currentPokemon?.id])
+
+  // Calcular probabilidad de captura basada en intentos fallidos
+  const calculateCaptureRate = () => {
+    const baseRate = 0.7 // 70% base
+    const attemptPenalty = captureAttempts * 0.1 // -10% por cada intento fallido
+    const rarityPenalty = currentPokemon ? 
+      (currentPokemon.id > 600 ? 0.2 : 0) : 0 // Pokémon más raros son más difíciles
     
-    {isLoading ? (
-        <div className="text-center py-12">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-500 mx-auto mb-4"></div>
-        <p className="text-lg text-gray-600">Buscando Pokémon...</p>
-        </div>
-    ) : currentPokemon ? (
-        <div className="text-center">
-          {/* Imagen del Pokémon */}
-        <div className="mb-6">
-            <img 
-            src={currentPokemon.image} 
-            alt={currentPokemon.name}
-            className="w-48 h-48 object-contain mx-auto rounded-lg bg-white/50 shadow-lg"
-            onError={(e) => {
-                e.target.src = 'https://via.placeholder.com/192x192?text=Pokemon'
-            }}
-            />
-        </div>
-        
-          {/* Información del Pokémon */}
-        <div className="mb-6">
-            <h3 className="text-2xl font-bold text-gray
+    return Math.max(0.2, baseRate - attemptPenalty - rarityPenalty)
+  }
+
+  // Calcular probabilidad de escape total
+  const calculateEscapeRate = () => {
+    const baseEscape = 0.05 // 5% base
+    const attemptIncrease = captureAttempts * 0.15 // +15% por cada intento
+    const rarityIncrease = currentPokemon ? 
+      (currentPokemon.id > 600 ? 0.1 : 0) : 0 // Pokémon raros escapan más
+    
+    return Math.min(0.6, baseEscape + attemptIncrease + rarityIncrease)
+  }
+
+  const handleCapture = async () => {
+    if (!currentPokemon || isCapturing || pokemonEscaped) return
+
+    const captureRate = calculateCaptureRate()
+    const escapeRate = calculateEscapeRate()
+    
+    // Incrementar intentos
+    setCaptureAttempts(prev => prev + 1)
+    
+    // Determinar resultado
+    const captureSuccess = Math.random() < captureRate
+    const willEscape = !captureSuccess && Math.random() < escapeRate
+    
+    if (willEscape) {
+      // El Pokémon escapará después de la animación
+      setShowEscapeAnimation(true)
+      setTimeout(() => {
+        setPokemonEscaped(true)
+        setShowEscapeAnimation(false)
+      }, 3000) // Esperar a que termine la animación de fallo
+    }
+    
+    // Ejecutar la captura con resultado predeterminado
+    if (typeof onCapture === 'function') {
+      // Si onCapture acepta un parámetro de éxito, pasarlo
+      onCapture(captureSuccess)
+    } else {
+      // Si no, simular la captura estándar
+      onCapture()
+    }
+  }
+
+  const handlePokemonEscape = () => {
+    if (showEscapeAnimation) {
+      setTimeout(() => {
+        setPokemonEscaped(true)
+        setShowEscapeAnimation(false)
+      }, 1000)
+    }
+  }
+
+  const handleFindNewPokemon = () => {
+    setPokemonEscaped(false)
+    setCaptureAttempts(0)
+    setShowEscapeAnimation(false)
+    onEncounter()
+  }
+
+  // Pantalla de carga
+  if (isLoading) {
+    return (
+      <div className="wild-pokemon">
