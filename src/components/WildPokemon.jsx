@@ -1,253 +1,213 @@
 import React, { useState, useEffect } from 'react'
-import { getTypeColor, getPokemonRarity, getRarityEmoji } from '../utils/gameUtils.js'
-import spriteService from "../Services/SpriteService.js";
+import { useSprite } from '../hooks/useSprite'
 
-const WildPokemon = ({ 
-  pokemon, 
-  onCapture, 
-  onFlee, 
-  isCapturing, 
-  captureResult,
-  playerLevel 
-}) => {
-  const [sprite, setSprite] = useState(null)
-  const [isImageLoading, setIsImageLoading] = useState(true)
+const WildPokemon = ({ currentPokemon, onEncounter, isLoading, captureResult }) => {
+  const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
-  const [isShaking, setIsShaking] = useState(false)
-  const [showStats, setShowStats] = useState(false)
+  
+  // Usar el hook de sprite como fallback
+  const { sprite, loading: spriteLoading, error: spriteError } = useSprite(
+    currentPokemon?.id,
+    'official',
+    'large',
+    { pokemonName: currentPokemon?.name, enablePlaceholder: true }
+  )
 
-  // Cargar sprite cuando cambia el Pokémon
+  // Reset estados cuando cambia el Pokémon
   useEffect(() => {
-    if (pokemon) {
-      loadPokemonSprite()
+    if (currentPokemon) {
+      setImageLoaded(false)
+      setImageError(false)
     }
-  }, [pokemon])
+  }, [currentPokemon?.id])
 
-  // Cargar sprite usando el servicio
-  const loadPokemonSprite = async () => {
-    setIsImageLoading(true)
+  const handleImageLoad = () => {
+    setImageLoaded(true)
     setImageError(false)
-
-    try {
-      const spriteData = await spriteService.getSprite(pokemon, 'official', 3000)
-      setSprite(spriteData)
-    } catch (error) {
-      console.error('Error loading sprite:', error)
-      setImageError(true)
-    } finally {
-      setIsImageLoading(false)
-    }
   }
 
-  // Animación de captura
-  useEffect(() => {
-    if (isCapturing) {
-      setIsShaking(true)
-      const timer = setTimeout(() => {
-        setIsShaking(false)
-      }, 1500)
-      return () => clearTimeout(timer)
-    }
-  }, [isCapturing])
-
-  // Obtener información de rareza
-  const rarity = getPokemonRarity(pokemon?.id)
-  const rarityEmoji = getRarityEmoji(rarity)
-
-  // Calcular tasa de captura estimada
-  const calculateCaptureRate = () => {
-    const baseRate = 0.7
-    const levelBonus = Math.min(playerLevel * 0.02, 0.2)
-    const rarityPenalty = pokemon.id > 600 ? 0.1 : 0
-    return Math.min(baseRate + levelBonus - rarityPenalty, 0.95)
+  const handleImageError = () => {
+    setImageError(true)
+    setImageLoaded(false)
   }
 
-  if (!pokemon) {
+  // Función para obtener la imagen correcta
+  const getImageUrl = () => {
+    if (!currentPokemon) return null
+    
+    // Prioridad: imagen del Pokémon actual, luego sprite del servicio
+    if (currentPokemon.image && !imageError) {
+      return currentPokemon.image
+    }
+    
+    if (sprite && !spriteError) {
+      return sprite
+    }
+    
+    // Fallback final
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${currentPokemon.id}.png`
+  }
+
+  const imageUrl = getImageUrl()
+
+  if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-96 bg-white rounded-2xl shadow-lg">
+      <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
         <div className="text-center">
-          <div className="text-6xl mb-4">🔍</div>
-          <p className="text-gray-600 text-lg">Buscando Pokémon salvajes...</p>
+          <div className="mb-6">
+            <div className="w-48 h-48 mx-auto bg-white/10 rounded-2xl flex items-center justify-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white"></div>
+            </div>
+          </div>
+          <p className="text-xl text-white font-bold animate-pulse">
+            Buscando Pokémon salvaje...
+          </p>
+          <p className="text-white/70 mt-2">
+            Explorando la zona...
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!currentPokemon) {
+    return (
+      <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+        <div className="text-center">
+          <div className="mb-6">
+            <div className="w-48 h-48 mx-auto bg-white/10 rounded-2xl flex items-center justify-center">
+              <div className="text-6xl">🔍</div>
+            </div>
+          </div>
+          <p className="text-xl text-white font-bold">
+            No hay Pokémon en la zona
+          </p>
+          <p className="text-white/70 mt-2">
+            Presiona "Buscar Nuevo Pokémon" para explorar
+          </p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-      {/* Header con información básica */}
-      <div 
-        className="px-6 py-4 text-white text-center"
-        style={{
-          background: `linear-gradient(135deg, ${getTypeColor(pokemon.types[0])} 0%, ${getTypeColor(pokemon.types[1] || pokemon.types[0])} 100%)`
-        }}
-      >
-        <div className="flex items-center justify-between">
-          <div className="text-left">
-            <h2 className="text-2xl font-bold capitalize">
-              {pokemon.name}
-            </h2>
-            <p className="text-sm opacity-90">
-              #{pokemon.id.toString().padStart(3, '0')}
-            </p>
-          </div>
-          <div className="text-right">
-            <div className="text-2xl mb-1">{rarityEmoji}</div>
-            <div className="text-sm opacity-90 capitalize">{rarity}</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Imagen del Pokémon */}
-      <div className="relative p-8 bg-gray-50">
-        <div className="flex justify-center">
-          <div 
-            className={`relative transition-all duration-300 ${
-              isShaking ? 'animate-bounce' : ''
-            } ${isCapturing ? 'scale-110' : 'scale-100'}`}
-          >
-            {isImageLoading ? (
-              <div className="w-48 h-48 bg-gray-200 rounded-full flex items-center justify-center animate-pulse">
-                <div className="text-4xl">⏳</div>
-              </div>
-            ) : (
+    <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+      <div className="text-center">
+        <div className="mb-6">
+          <div className="w-48 h-48 mx-auto bg-white/10 rounded-2xl overflow-hidden relative">
+            {/* Imagen del Pokémon */}
+            {imageUrl && (
               <img
-                src={sprite?.url}
-                alt={pokemon.name}
-                className="w-48 h-48 object-contain drop-shadow-lg"
-                onError={() => setImageError(true)}
+                src={imageUrl}
+                alt={currentPokemon.name}
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+                className={`
+                  w-full h-full object-contain transition-opacity duration-300
+                  ${imageLoaded ? 'opacity-100' : 'opacity-0'}
+                `}
+                loading="lazy"
               />
             )}
             
-            {/* Indicador de sprite placeholder */}
-            {sprite?.isPlaceholder && (
-              <div className="absolute bottom-0 right-0 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">
-                📷
+            {/* Loading spinner para la imagen */}
+            {(!imageLoaded || spriteLoading) && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white/5">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+              </div>
+            )}
+            
+            {/* Fallback si no hay imagen */}
+            {imageError && spriteError && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white/5">
+                <div className="text-center text-white/70">
+                  <div className="text-4xl mb-2">❓</div>
+                  <div className="text-sm">#{currentPokemon.id}</div>
+                </div>
               </div>
             )}
           </div>
         </div>
 
-        {/* Efectos de captura */}
-        {captureResult && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className={`text-6xl animate-bounce ${
-              captureResult === 'success' ? 'text-green-500' : 'text-red-500'
-            }`}>
-              {captureResult === 'success' ? '✨' : '💨'}
+        {/* Información del Pokémon */}
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-2xl font-bold text-white capitalize mb-2">
+              {currentPokemon.name}
+            </h3>
+            <p className="text-white/70">
+              #{currentPokemon.id.toString().padStart(3, '0')}
+            </p>
+          </div>
+
+          {/* Tipos */}
+          <div className="flex justify-center gap-2">
+            {currentPokemon.types?.map((type, index) => (
+              <span
+                key={index}
+                className={`
+                  px-3 py-1 rounded-full text-sm font-medium text-white
+                  ${getTypeColor(type)}
+                `}
+              >
+                {type}
+              </span>
+            ))}
+          </div>
+
+          {/* Estadísticas básicas */}
+          <div className="grid grid-cols-2 gap-4 text-white/80">
+            <div>
+              <p className="text-sm opacity-75">Altura</p>
+              <p className="font-bold">{(currentPokemon.height / 10).toFixed(1)}m</p>
+            </div>
+            <div>
+              <p className="text-sm opacity-75">Peso</p>
+              <p className="font-bold">{(currentPokemon.weight / 10).toFixed(1)}kg</p>
             </div>
           </div>
-        )}
-      </div>
 
-      {/* Información del Pokémon */}
-      <div className="p-6">
-        {/* Tipos */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {pokemon.types.map((type, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 rounded-full text-white text-sm font-medium capitalize"
-              style={{ backgroundColor: getTypeColor(type) }}
-            >
-              {type}
-            </span>
-          ))}
-        </div>
-
-        {/* Estadísticas básicas */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-gray-800">
-              {(pokemon.height / 10).toFixed(1)}m
+          {/* Efecto de captura */}
+          {captureResult && (
+            <div className={`
+              p-4 rounded-xl font-bold text-center
+              ${captureResult === 'success' 
+                ? 'bg-green-500/20 text-green-100' 
+                : 'bg-red-500/20 text-red-100'
+              }
+            `}>
+              {captureResult === 'success' ? '¡Capturado!' : '¡Escapó!'}
             </div>
-            <div className="text-sm text-gray-600">Altura</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-gray-800">
-              {(pokemon.weight / 10).toFixed(1)}kg
-            </div>
-            <div className="text-sm text-gray-600">Peso</div>
-          </div>
-        </div>
-
-        {/* Tasa de captura */}
-        <div className="mb-6">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-gray-600">Probabilidad de captura</span>
-            <span className="text-sm font-bold text-gray-800">
-              {(calculateCaptureRate() * 100).toFixed(0)}%
-            </span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div 
-              className="bg-gradient-to-r from-red-500 to-green-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${calculateCaptureRate() * 100}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Botón para mostrar/ocultar estadísticas */}
-        <button
-          onClick={() => setShowStats(!showStats)}
-          className="w-full mb-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-sm font-medium"
-        >
-          {showStats ? 'Ocultar detalles' : 'Ver detalles'} 
-          <span className="ml-2">{showStats ? '↑' : '↓'}</span>
-        </button>
-
-        {/* Estadísticas detalladas */}
-        {showStats && (
-          <div className="bg-gray-50 rounded-lg p-4 mb-6 space-y-2">
-            <div className="text-sm">
-              <strong>Sprite:</strong> {sprite?.type || 'Cargando...'} 
-              {sprite?.isPlaceholder && ' (Placeholder)'}
-            </div>
-            <div className="text-sm">
-              <strong>Generación:</strong> {pokemon.id <= 151 ? 'I' : pokemon.id <= 251 ? 'II' : pokemon.id <= 386 ? 'III' : 'IV+'}
-            </div>
-            <div className="text-sm">
-              <strong>Rareza:</strong> {rarity}
-            </div>
-          </div>
-        )}
-
-        {/* Botones de acción */}
-        <div className="flex gap-3">
-          <button
-            onClick={onCapture}
-            disabled={isCapturing}
-            className={`flex-1 py-3 px-4 rounded-xl font-bold text-white transition-all duration-200 ${
-              isCapturing 
-                ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-red-500 hover:bg-red-600 active:scale-95 shadow-lg hover:shadow-xl'
-            }`}
-          >
-            {isCapturing ? (
-              <div className="flex items-center justify-center">
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                Capturando...
-              </div>
-            ) : (
-              '🎯 Capturar'
-            )}
-          </button>
-          
-          <button
-            onClick={onFlee}
-            disabled={isCapturing}
-            className={`px-4 py-3 rounded-xl font-bold transition-all duration-200 ${
-              isCapturing 
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                : 'bg-gray-200 hover:bg-gray-300 text-gray-700 active:scale-95'
-            }`}
-          >
-            💨 Huir
-          </button>
+          )}
         </div>
       </div>
     </div>
   )
+}
+
+// Función para obtener el color del tipo
+const getTypeColor = (type) => {
+  const colors = {
+    normal: 'bg-gray-500',
+    fire: 'bg-red-500',
+    water: 'bg-blue-500',
+    electric: 'bg-yellow-500',
+    grass: 'bg-green-500',
+    ice: 'bg-blue-300',
+    fighting: 'bg-red-700',
+    poison: 'bg-purple-500',
+    ground: 'bg-yellow-700',
+    flying: 'bg-indigo-400',
+    psychic: 'bg-pink-500',
+    bug: 'bg-green-400',
+    rock: 'bg-yellow-800',
+    ghost: 'bg-purple-700',
+    dragon: 'bg-purple-800',
+    dark: 'bg-gray-800',
+    steel: 'bg-gray-400',
+    fairy: 'bg-pink-300'
+  }
+  return colors[type] || 'bg-gray-500'
 }
 
 export default WildPokemon
