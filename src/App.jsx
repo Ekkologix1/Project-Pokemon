@@ -17,20 +17,22 @@ function App() {
     attemptCapture,
     isLoading,
     isCapturing,
-    captureResult
+    captureResult,
+    gameReady
   } = usePokemonGame()
 
   const [activeTab, setActiveTab] = useState('hunt')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  // Mostrar loading inicial
-  if (!playerData) {
+  // Mostrar loading inicial solo hasta que el juego esté listo
+  if (!gameReady) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center">
         <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
           <div className="text-center text-white">
             <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mb-4 mx-auto"></div>
-            <p className="text-lg font-bold">Cargando Pokémon Hunter...</p>
+            <p className="text-lg font-bold">Inicializando Pokémon Hunter...</p>
+            <p className="text-sm opacity-75 mt-2">Preparando tu aventura...</p>
           </div>
         </div>
       </div>
@@ -206,6 +208,17 @@ function App() {
                     </p>
                   </div>
                 )}
+
+                {/* Botón para buscar nuevo Pokémon */}
+                <div className="flex justify-center">
+                  <button
+                    onClick={encounterWildPokemon}
+                    disabled={isLoading}
+                    className="px-6 py-3 bg-white/20 backdrop-blur-sm rounded-xl text-white hover:bg-white/30 transition-all duration-200 disabled:opacity-50"
+                  >
+                    {isLoading ? 'Buscando...' : 'Buscar Nuevo Pokémon'}
+                  </button>
+                </div>
               </div>
               
               <div>
