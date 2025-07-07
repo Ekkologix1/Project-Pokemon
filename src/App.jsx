@@ -8,6 +8,7 @@ import Notification from './components/Notification'
 import PokemonSphere from './components/PokemonSphere'
 import { usePokemonGame } from './hooks/usePokemonGame'
 
+
 function App() {
   const {
     playerData,
@@ -39,6 +40,7 @@ function App() {
           <div className="text-center text-white">
             <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mb-4 mx-auto"></div>
             <p className="text-lg">Cargando juego...</p>
+            <div className="min-h-screen w-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4"></div>
           </div>
         </div>
       </div>
