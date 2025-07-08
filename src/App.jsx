@@ -5,6 +5,7 @@ import WildPokemon from './components/WildPokemon'
 import Collection from './components/Collection'
 import Missions from './components/Missions'
 import Notification from './components/Notification'
+import Pokedex from './components/Pokedex'
 import { usePokemonGame } from './hooks/usePokemonGame'
 
 function App() {

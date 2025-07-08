@@ -1,8 +1,32 @@
-// src/components/Pokedex.jsx
-import { useState, useEffect, useMemo } from 'react'
-import { useSprite } from '../hooks/useSprite'
+// Función para cargar datos de Pokémon dinámicamente
+const loadPokemonData = async (id) => {
+  try {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    if (!response.ok) throw new Error('Pokemon not found')
+    
+    const pokemon = await response.json()
+    const speciesResponse = await fetch(pokemon.species.url)
+    const species = await speciesResponse.json()
+    
+    return {
+      id: pokemon.id,
+      name: pokemon.name,
+      types: pokemon.types.map(type => type.type.name),
+      generation: species.generation.name.replace('generation-', ''),
+      legendary: species.is_legendary || species.is_mythical,
+      height: pokemon.height,
+      weight: pokemon.weight,
+      sprites: pokemon.sprites
+    }
+  } catch (error) {
+    console.error(`Error loading Pokemon ${id}:`, error)
+    return null
+  }
+}
 
+// Datos base completos de Pokémon (hasta la Generación 9)
 const POKEMON_DATA = {
+  // Generación 1 - Kanto (1-151)
   1: { name: 'Bulbasaur', types: ['grass', 'poison'], generation: 1, legendary: false },
   2: { name: 'Ivysaur', types: ['grass', 'poison'], generation: 1, legendary: false },
   3: { name: 'Venusaur', types: ['grass', 'poison'], generation: 1, legendary: false },
@@ -122,7 +146,7 @@ const POKEMON_DATA = {
   117: { name: 'Seadra', types: ['water'], generation: 1, legendary: false },
   118: { name: 'Goldeen', types: ['water'], generation: 1, legendary: false },
   119: { name: 'Seaking', types: ['water'], generation: 1, legendary: false },
-  120: { name: 'Staryu', types: ['water'], generation: 1, legendary: false },
+  120: { name: 'Staryu', types: ['water'], generation:  1, legendary: false },
   121: { name: 'Starmie', types: ['water', 'psychic'], generation: 1, legendary: false },
   122: { name: 'Mr. Mime', types: ['psychic', 'fairy'], generation: 1, legendary: false },
   123: { name: 'Scyther', types: ['bug', 'flying'], generation: 1, legendary: false },
@@ -130,31 +154,6 @@ const POKEMON_DATA = {
   125: { name: 'Electabuzz', types: ['electric'], generation: 1, legendary: false },
   126: { name: 'Magmar', types: ['fire'], generation: 1, legendary: false },
   127: { name: 'Pinsir', types: ['bug'], generation: 1, legendary: false },
-  128: { name: 'Tauros', types: ['normal'], generation: 1, legendary: false },
-  129: { name: 'Magikarp', types: ['water'], generation: 1, legendary: false },
-  130: { name: 'Gyarados', types: ['water', 'flying'], generation: 1, legendary: false },
-  131: { name: 'Lapras', types: ['water', 'ice'], generation: 1, legendary: false },
-  132: { name: 'Ditto', types: ['normal'], generation: 1, legendary: false },
-  133: { name: 'Eevee', types: ['normal'], generation: 1, legendary: false },
-  134: { name: 'Vaporeon', types: ['water'], generation: 1, legendary: false },
-  135: { name: 'Jolteon', types: ['electric'], generation: 1, legendary: false },
-  136: { name: 'Flareon', types: ['fire'], generation: 1, legendary: false },
-  137: { name: 'Porygon', types: ['normal'], generation: 1, legendary: false },
-  138: { name: 'Omanyte', types: ['rock', 'water'], generation: 1, legendary: false },
-  139: { name: 'Omastar', types: ['rock', 'water'], generation: 1, legendary: false },
-  140: { name: 'Kabuto', types: ['rock', 'water'], generation: 1, legendary: false },
-  141: { name: 'Kabutops', types: ['rock', 'water'], generation: 1, legendary: false },
-  142: { name: 'Aerodactyl', types: ['rock', 'flying'], generation: 1, legendary: false },
-  143: { name: 'Snorlax', types: ['normal'], generation: 1, legendary: false },
-  144: { name: 'Articuno', types: ['ice', 'flying'], generation: 1, legendary: true },
-  145: { name: 'Zapdos', types: ['electric', 'flying'], generation: 1, legendary: true },
-  146: { name: 'Moltres', types: ['fire', 'flying'], generation: 1, legendary: true },
-  147: { name: 'Dratini', types: ['dragon'], generation: 1, legendary: false },
-  148: { name: 'Dragonair', types: ['dragon'], generation: 1, legendary: false },
-  149: { name: 'Dragonite', types: ['dragon', 'flying'], generation: 1, legendary: false },
-  150: { name: 'Mewtwo', types: ['psychic'], generation: 1, legendary: true },
-  151: { name: 'Mew', types: ['psychic'], generation: 1, legendary: true }
-}
 
 const TYPE_COLORS = {
   normal: 'bg-gray-400',
