@@ -394,13 +394,13 @@ const POKEMON_DATA = {
   385: { name: 'Jirachi', types: ['steel', 'psychic'], generation: 3, legendary: true },
   386: { name: 'Deoxys', types: ['psychic'], generation: 3, legendary: true },
 
-  // Generación 4 - Sinnoh (387-493)
+// Generación 4 - Sinnoh (387-493)
   387: { name: 'Turtwig', types: ['grass'], generation: 4, legendary: false },
   388: { name: 'Grotle', types: ['grass'], generation: 4, legendary: false },
   389: { name: 'Torterra', types: ['grass', 'ground'], generation: 4, legendary: false },
   390: { name: 'Chimchar', types: ['fire'], generation: 4, legendary: false },
   391: { name: 'Monferno', types: ['fire', 'fighting'], generation: 4, legendary: false },
-392: { name: 'Infernape', types: ['fire', 'fighting'], generation: 4, legendary: false },
+  392: { name: 'Infernape', types: ['fire', 'fighting'], generation: 4, legendary: false },
   393: { name: 'Piplup', types: ['water'], generation: 4, legendary: false },
   394: { name: 'Prinplup', types: ['water'], generation: 4, legendary: false },
   395: { name: 'Empoleon', types: ['water', 'steel'], generation: 4, legendary: false },
@@ -497,7 +497,7 @@ const POKEMON_DATA = {
   486: { name: 'Regigigas', types: ['normal'], generation: 4, legendary: true },
   487: { name: 'Giratina', types: ['ghost', 'dragon'], generation: 4, legendary: true },
   488: { name: 'Cresselia', types: ['psychic'], generation: 4, legendary: true },
-  489: { name: 'Phione', types: ['water'], generation: 4, legendary: true },
+  489: { name: 'Phione', types: ['water'], generation: 4, legendary: false },
   490: { name: 'Manaphy', types: ['water'], generation: 4, legendary: true },
   491: { name: 'Darkrai', types: ['dark'], generation: 4, legendary: true },
   492: { name: 'Shaymin', types: ['grass'], generation: 4, legendary: true },
@@ -660,13 +660,15 @@ const POKEMON_DATA = {
   647: { name: 'Keldeo', types: ['water', 'fighting'], generation: 5, legendary: true },
   648: { name: 'Meloetta', types: ['normal', 'psychic'], generation: 5, legendary: true },
   649: { name: 'Genesect', types: ['bug', 'steel'], generation: 5, legendary: true },
+
+  // Generación 6 - Kalos (650-721)
   650: { name: 'Chespin', types: ['grass'], generation: 6, legendary: false },
   651: { name: 'Quilladin', types: ['grass'], generation: 6, legendary: false },
-  652: { name: 'Chesnaught', types: ['grass', ' fighting'], generation: 6, legendary: false },
+  652: { name: 'Chesnaught', types: ['grass', 'fighting'], generation: 6, legendary: false },
   653: { name: 'Fennekin', types: ['fire'], generation: 6, legendary: false },
   654: { name: 'Braixen', types: ['fire'], generation: 6, legendary: false },
   655: { name: 'Delphox', types: ['fire', 'psychic'], generation: 6, legendary: false },
-  656: { name: 'Froakie', types: ['water'], generation: 6, legendary: false },  
+  656: { name: 'Froakie', types: ['water'], generation: 6, legendary: false },
   657: { name: 'Frogadier', types: ['water'], generation: 6, legendary: false },
   658: { name: 'Greninja', types: ['water', 'dark'], generation: 6, legendary: false },
   659: { name: 'Bunnelby', types: ['normal'], generation: 6, legendary: false },
@@ -685,7 +687,7 @@ const POKEMON_DATA = {
   672: { name: 'Skiddo', types: ['grass'], generation: 6, legendary: false },
   673: { name: 'Gogoat', types: ['grass'], generation: 6, legendary: false },
   674: { name: 'Pancham', types: ['fighting'], generation: 6, legendary: false },
-  675: { name: 'Pangoro', types: ['fighting', ' dark'], generation: 6, legendary: false },
+  675: { name: 'Pangoro', types: ['fighting', 'dark'], generation: 6, legendary: false },
   676: { name: 'Furfrou', types: ['normal'], generation: 6, legendary: false },
   677: { name: 'Espurr', types: ['psychic'], generation: 6, legendary: false },
   678: { name: 'Meowstic', types: ['psychic'], generation: 6, legendary: false },
@@ -693,264 +695,478 @@ const POKEMON_DATA = {
   680: { name: 'Doublade', types: ['steel', 'ghost'], generation: 6, legendary: false },
   681: { name: 'Aegislash', types: ['steel', 'ghost'], generation: 6, legendary: false },
   682: { name: 'Spritzee', types: ['fairy'], generation: 6, legendary: false },
-}
-const TYPE_COLORS = {
-  normal: 'bg-gray-400',
-  fire: 'bg-red-500',
-  water: 'bg-blue-500',
-  electric: 'bg-yellow-400',
-  grass: 'bg-green-500',
-  ice: 'bg-cyan-300',
-  fighting: 'bg-red-700',
-  poison: 'bg-purple-500',
-  ground: 'bg-yellow-600',
-  flying: 'bg-indigo-400',
-  psychic: 'bg-pink-500',
-  bug: 'bg-lime-400',
-  rock: 'bg-yellow-800',
-  ghost: 'bg-purple-700',
-  dragon: 'bg-indigo-700',
-  dark: 'bg-gray-800',
-  steel: 'bg-gray-500',
-  fairy: 'bg-pink-300'
-}
+  683: { name: 'Aromatisse', types: ['fairy'], generation: 6, legendary: false },
+  684: { name: 'Swirlix', types: ['fairy'], generation: 6, legendary: false },
+  685: { name: 'Slurpuff', types: ['fairy'], generation: 6, legendary: false },
+  686: { name: 'Inkay', types: ['dark', 'psychic'], generation: 6, legendary: false },
+  687: { name: 'Malamar', types: ['dark', 'psychic'], generation: 6, legendary: false },
+  688: { name: 'Binacle', types: ['rock', 'water'], generation: 6, legendary: false },
+  689: { name: 'Barbaracle', types: ['rock', 'water'], generation: 6, legendary: false },
+  690: { name: 'Skrelp', types: ['poison', 'water'], generation: 6, legendary: false },
+  691: { name: 'Dragalge', types: ['poison', 'dragon'], generation: 6, legendary: false },
+  692: { name: 'Clauncher', types: ['water'], generation: 6, legendary: false },
+  693: { name: 'Clawitzer', types: ['water'], generation: 6, legendary: false },
+  694: { name: 'Helioptile', types: ['electric', 'normal'], generation: 6, legendary: false },
+  695: { name: 'Heliolisk', types: ['electric', 'normal'], generation: 6, legendary: false },
+  696: { name: 'Tyrunt', types: ['rock', 'dragon'], generation: 6, legendary: false },
+  697: { name: 'Tyrantrum', types: ['rock', 'dragon'], generation: 6, legendary: false },
+  698: { name: 'Amaura', types: ['rock', 'ice'], generation: 6, legendary: false },
+  699: { name: 'Aurorus', types: ['rock', 'ice'], generation: 6, legendary: false },
+  700: { name: 'Sylveon', types: ['fairy'], generation: 6, legendary: false },
+  701: { name: 'Hawlucha', types: ['fighting', 'flying'], generation: 6, legendary: false },
+  702: { name: 'Dedenne', types: ['electric', 'fairy'], generation: 6, legendary: false },
+  703: { name: 'Carbink', types: ['rock', 'fairy'], generation: 6, legendary: false },
+  704: { name: 'Goomy', types: ['dragon'], generation: 6, legendary: false },
+  705: { name: 'Sliggoo', types: ['dragon'], generation: 6, legendary: false },
+  706: { name: 'Goodra', types: ['dragon'], generation: 6, legendary: false },
+  707: { name: 'Klefki', types: ['steel', 'fairy'], generation: 6, legendary: false },
+  708: { name: 'Phantump', types: ['ghost', 'grass'], generation: 6, legendary: false },
+  709: { name: 'Trevenant', types: ['ghost', 'grass'], generation: 6, legendary: false },
+  710: { name: 'Pumpkaboo', types: ['ghost', 'grass'], generation: 6, legendary: false },
+  711: { name: 'Gourgeist', types: ['ghost', 'grass'], generation: 6, legendary: false },
+  712: { name: 'Bergmite', types: ['ice'], generation: 6, legendary: false },
+  713: { name: 'Avalugg', types: ['ice'], generation: 6, legendary: false },
+  714: { name: 'Noibat', types: ['flying', 'dragon'], generation: 6, legendary: false },
+  715: { name: 'Noivern', types: ['flying', 'dragon'], generation: 6, legendary: false },
+  716: { name: 'Xerneas', types: ['fairy'], generation: 6, legendary: true },
+  717: { name: 'Yveltal', types: ['dark', 'flying'], generation: 6, legendary: true },
+  718: { name: 'Zygarde', types: ['dragon', 'ground'], generation: 6, legendary: true },
+  719: { name: 'Diancie', types: ['rock', 'fairy'], generation: 6, legendary: true },
+  720: { name: 'Hoopa', types: ['psychic', 'ghost'], generation: 6, legendary: true },
+  721: { name: 'Volcanion', types: ['fire', 'water'], generation: 6, legendary: true },
 
-const PokemonCard = ({ pokemon, id, caught, onClick }) => {
-  const { sprite, loading, placeholder } = useSprite(id, 'official', 'small', { 
-    pokemonName: pokemon.name 
-  })
+  // Generación 7 - Alola (722-809)
+  722: { name: 'Rowlet', types: ['grass', 'flying'], generation: 7, legendary: false },
+  723: { name: 'Dartrix', types: ['grass', 'flying'], generation: 7, legendary: false },
+  724: { name: 'Decidueye', types: ['grass', 'ghost'], generation: 7, legendary: false },
+  725: { name: 'Litten', types: ['fire'], generation: 7, legendary: false },
+  726: { name: 'Torracat', types: ['fire'], generation: 7, legendary: false },
+  727: { name: 'Incineroar', types: ['fire', 'dark'], generation: 7, legendary: false },
+  728: { name: 'Popplio', types: ['water'], generation: 7, legendary: false },
+  729: { name: 'Brionne', types: ['water'], generation: 7, legendary: false },
+  730: { name: 'Primarina', types: ['water', 'fairy'], generation: 7, legendary: false },
+  731: { name: 'Pikipek', types: ['normal', 'flying'], generation: 7, legendary: false },
+  732: { name: 'Trumbeak', types: ['normal', 'flying'], generation: 7, legendary: false },
+  733: { name: 'Toucannon', types: ['normal', 'flying'], generation: 7, legendary: false },
+  734: { name: 'Yungoos', types: ['normal'], generation: 7, legendary: false },
+  735: { name: 'Gumshoos', types: ['normal'], generation: 7, legendary: false },
+  736: { name: 'Grubbin', types: ['bug'], generation: 7, legendary: false },
+  737: { name: 'Charjabug', types: ['bug', 'electric'], generation: 7, legendary: false },
+  738: { name: 'Vikavolt', types: ['bug', 'electric'], generation: 7, legendary: false },
+  739: { name: 'Crabrawler', types: ['fighting'], generation: 7, legendary: false },
+  740: { name: 'Crabominable', types: ['fighting', 'ice'], generation: 7, legendary: false },
+  741: { name: 'Oricorio', types: ['fire', 'flying'], generation: 7, legendary: false },
+  742: { name: 'Cutiefly', types: ['bug', 'fairy'], generation: 7, legendary: false },
+  743: { name: 'Ribombee', types: ['bug', 'fairy'], generation: 7, legendary: false },
+  744: { name: 'Rockruff', types: ['rock'], generation: 7, legendary: false },
+  745: { name: 'Lycanroc', types: ['rock'], generation: 7, legendary: false },
+  746: { name: 'Wishiwashi', types: ['water'], generation: 7, legendary: false },
+  747: { name: 'Mareanie', types: ['poison', 'water'], generation: 7, legendary: false },
+  748: { name: 'Toxapex', types: ['poison', 'water'], generation: 7, legendary: false },
+  749: { name: 'Mudbray', types: ['ground'], generation: 7, legendary: false },
+  750: { name: 'Mudsdale', types: ['ground'], generation: 7, legendary: false },
+  751: { name: 'Dewpider', types: ['water', 'bug'], generation: 7, legendary: false },
+  752: { name: 'Araquanid', types: ['water', 'bug'], generation: 7, legendary: false },
+  753: { name: 'Fomantis', types: ['grass'], generation: 7, legendary: false },
+  754: { name: 'Lurantis', types: ['grass'], generation: 7, legendary: false },
+  755: { name: 'Morelull', types: ['grass', 'fairy'], generation: 7, legendary: false },
+  756: { name: 'Shiinotic', types: ['grass', 'fairy'], generation: 7, legendary: false },
+  757: { name: 'Salandit', types: ['poison', 'fire'], generation: 7, legendary: false },
+  758: { name: 'Salazzle', types: ['poison', 'fire'], generation: 7, legendary: false },
+  759: { name: 'Stufful', types: ['normal', 'fighting'], generation: 7, legendary: false },
+  760: { name: 'Bewear', types: ['normal', 'fighting'], generation: 7, legendary: false },
+  761: { name: 'Bounsweet', types: ['grass'], generation: 7, legendary: false },
+  762: { name: 'Steenee', types: ['grass'], generation: 7, legendary: false },
+  763: { name: 'Tsareena', types: ['grass'], generation: 7, legendary: false },
+  764: { name: 'Comfey', types: ['fairy'], generation: 7, legendary: false },
+  765: { name: 'Oranguru', types: ['normal', 'psychic'], generation: 7, legendary: false },
+  766: { name: 'Passimian', types: ['fighting'], generation: 7, legendary: false },
+  767: { name: 'Wimpod', types: ['bug', 'water'], generation: 7, legendary: false },
+  768: { name: 'Golisopod', types: ['bug', 'water'], generation: 7, legendary: false },
+  769: { name: 'Sandygast', types: ['ghost', 'ground'], generation: 7, legendary: false },
+  770: { name: 'Palossand', types: ['ghost', 'ground'], generation: 7, legendary: false },
+  771: { name: 'Pyukumuku', types: ['water'], generation: 7, legendary: false },
+  772: { name: 'Type: Null', types: ['normal'], generation: 7, legendary: false },
+  773: { name: 'Silvally', types: ['normal'], generation: 7, legendary: false },
+  774: { name: 'Minior', types: ['rock', 'flying'], generation: 7, legendary: false },
+  775: { name: 'Komala', types: ['normal'], generation: 7, legendary: false },
+  776: { name: 'Turtonator', types: ['fire', 'dragon'], generation: 7, legendary: false },
+  777: { name: 'Togedemaru', types: ['electric', 'steel'], generation: 7, legendary: false },
+  778: { name: 'Mimikyu', types: ['ghost', 'fairy'], generation: 7, legendary: false },
+  779: { name: 'Bruxish', types: ['water', 'psychic'], generation: 7, legendary: false },
+  780: { name: 'Drampa', types: ['normal', 'dragon'], generation: 7, legendary: false },
+  781: { name: 'Dhelmise', types: ['ghost', 'grass'], generation: 7, legendary: false },
+  782: { name: 'Jangmo-o', types: ['dragon'], generation: 7, legendary: false },
+  783: { name: 'Hakamo-o', types: ['dragon', 'fighting'], generation: 7, legendary: false },
+  784: { name: 'Kommo-o', types: ['dragon', 'fighting'], generation: 7, legendary: false },
+  785: { name: 'Tapu Koko', types: ['electric', 'fairy'], generation: 7, legendary: true },
+  786: { name: 'Tapu Lele', types: ['psychic', 'fairy'], generation: 7, legendary: true },
+  787: { name: 'Tapu Bulu', types: ['grass', 'fairy'], generation: 7, legendary: true },
+  788: { name: 'Tapu Fini', types: ['water', 'fairy'], generation: 7, legendary: true },
+  789: { name: 'Cosmog', types: ['psychic'], generation: 7, legendary: true },
+  790: { name: 'Cosmoem', types: ['psychic'], generation: 7, legendary: true },
+  791: { name: 'Solgaleo', types: ['psychic', 'steel'], generation: 7, legendary: true },
+  792: { name: 'Lunala', types: ['psychic', 'ghost'], generation: 7, legendary: true },
+  793: { name: 'Nihilego', types: ['rock', 'poison'], generation: 7, legendary: true },
+  794: { name: 'Buzzwole', types: ['bug', 'fighting'], generation: 7, legendary: true },
+  795: { name: 'Pheromosa', types: ['bug', 'fighting'], generation: 7, legendary: true },
+  796: { name: 'Xurkitree', types: ['electric'], generation: 7, legendary: true },
+  797: { name: 'Celesteela', types: ['steel', 'flying'], generation: 7, legendary: true },
+  798: { name: 'Kartana', types: ['grass', 'steel'], generation: 7, legendary: true },
+  799: { name: 'Guzzlord', types: ['dark', 'dragon'], generation: 7, legendary: true },
+  800: { name: 'Necrozma', types: ['psychic'], generation: 7, legendary: true },
+  801: { name: 'Magearna', types: ['steel', 'fairy'], generation: 7, legendary: true },
+  802: { name: 'Marshadow', types: ['fighting', 'ghost'], generation: 7, legendary: true },
+  803: { name: 'Poipole', types: ['poison'], generation: 7, legendary: false },
+  804: { name: 'Naganadel', types: ['poison', 'dragon'], generation: 7, legendary: false },
+  805: { name: 'Stakataka', types: ['rock', 'steel'], generation: 7, legendary: true },
+  806: { name: 'Blacephalon', types: ['fire', 'ghost'], generation: 7, legendary: true },
+  807: { name: 'Zeraora', types: ['electric'], generation: 7, legendary: true },
+  808: { name: 'Meltan', types: ['steel'], generation: 7, legendary: false },
+  809: { name: 'Melmetal', types: ['steel'], generation: 7, legendary: false },
 
-  return (
-    <div 
-      className={`
-        relative bg-white/20 backdrop-blur-sm rounded-xl p-3 shadow-lg cursor-pointer
-        transform transition-all duration-300 hover:scale-105 hover:shadow-xl
-        ${caught ? 'ring-2 ring-green-400' : 'grayscale opacity-60'}
-        ${pokemon.legendary ? 'ring-2 ring-yellow-400' : ''}
-      `}
-      onClick={() => onClick(pokemon, id)}
-    >
-      {pokemon.legendary && (
-        <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
-          <span className="text-xs">⭐</span>
-        </div>
-      )}
-      
-      <div className="text-center">
-        <div className="w-16 h-16 mx-auto mb-2 flex items-center justify-center">
-          {loading ? (
-            <div className="w-16 h-16 bg-gray-300 rounded-lg animate-pulse"></div>
-          ) : (
-            <img 
-              src={sprite || placeholder} 
-              alt={pokemon.name}
-              className="w-full h-full object-contain"
-            />
-          )}
-        </div>
-        
-        <p className="text-xs font-bold text-white mb-1">
-          #{id.toString().padStart(3, '0')}
-        </p>
-        
-        <p className="text-sm font-semibold text-white mb-2 truncate">
-          {caught ? pokemon.name : '???'}
-        </p>
-        
-        <div className="flex justify-center space-x-1">
-          {pokemon.types.map((type) => (
-            <span 
-              key={type}
-              className={`
-                px-2 py-1 rounded-full text-xs font-bold text-white
-                ${TYPE_COLORS[type] || 'bg-gray-500'}
-              `}
-            >
-              {caught ? type : '?'}
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
+  // Generación 8 - Galar (810-905)
+  810: { name: 'Grookey', types: ['grass'], generation: 8, legendary: false },
+  811: { name: 'Thwackey', types: ['grass'], generation: 8, legendary: false },
+  812: { name: 'Rillaboom', types: ['grass'], generation: 8, legendary: false },
+  813: { name: 'Scorbunny', types: ['fire'], generation: 8, legendary: false },
+  814: { name: 'Raboot', types: ['fire'], generation: 8, legendary: false },
+  815: { name: 'Cinderace', types: ['fire'], generation: 8, legendary: false },
+  816: { name: 'Sobble', types: ['water'], generation: 8, legendary: false },
+  817: { name: 'Drizzile', types: ['water'], generation: 8, legendary: false },
+  818: { name: 'Inteleon', types: ['water'], generation: 8, legendary: false },
+  819: { name: 'Skwovet', types: ['normal'], generation: 8, legendary: false },
+  820: { name: 'Greedent', types: ['normal'], generation: 8, legendary: false },
+  821: { name: 'Rookidee', types: ['flying'], generation: 8, legendary: false },
+  822: { name: 'Corvisquire', types: ['flying'], generation: 8, legendary: false },
+  823: { name: 'Corviknight', types: ['flying', 'steel'], generation: 8, legendary: false },
+  824: { name: 'Blipbug', types: ['bug'], generation: 8, legendary: false },
+  825: { name: 'Dottler', types: ['bug', 'psychic'], generation: 8, legendary: false },
+  826: { name: 'Orbeetle', types: ['bug', 'psychic'], generation: 8, legendary: false },
+  827: { name: 'Nickit', types: ['dark'], generation: 8, legendary: false },
+  828: { name: 'Thievul', types: ['dark'], generation: 8, legendary: false },
+  829: { name: 'Gossifleur', types: ['grass'], generation: 8, legendary: false },
+  830: { name: 'Eldegoss', types: ['grass'], generation: 8, legendary: false },
+  831: { name: 'Wooloo', types: ['normal'], generation: 8, legendary: false },
+  832: { name: 'Dubwool', types: ['normal'], generation: 8, legendary: false },
+  833: { name: 'Chewtle', types: ['water'], generation: 8, legendary: false },
+  834: { name: 'Drednaw', types: ['water', 'rock'], generation: 8, legendary: false },
+  835: { name: 'Yamper', types: ['electric'], generation: 8, legendary: false },
+  836: { name: 'Boltund', types: ['electric'], generation: 8, legendary: false },
+  837: { name: 'Rolycoly', types: ['rock'], generation: 8, legendary: false },
+  838: { name: 'Carkol', types: ['rock', 'fire'], generation: 8, legendary: false },
+  839: { name: 'Coalossal', types: ['rock', 'fire'], generation: 8, legendary: false },
+  840: { name: 'Applin', types: ['grass', 'dragon'], generation: 8, legendary: false },
+  841: { name: 'Flapple', types: ['grass', 'dragon'], generation: 8, legendary: false },
+  842: { name: 'Appletun', types: ['grass', 'dragon'], generation: 8, legendary: false },
+  843: { name: 'Silicobra', types: ['ground'], generation: 8, legendary: false },
+  844: { name: 'Sandaconda', types: ['ground'], generation: 8, legendary: false },
+  845: { name: 'Cramorant', types: ['flying', 'water'], generation: 8, legendary: false },
+  846: { name: 'Arrokuda', types: ['water'], generation: 8, legendary: false },
+  847: { name: 'Barraskewda', types: ['water'], generation: 8, legendary: false },
+  848: { name: 'Toxel', types: ['electric', 'poison'], generation: 8, legendary: false },
+  849: { name: 'Toxtricity', types: ['electric', 'poison'], generation: 8, legendary: false },
+  850: { name: 'Sizzlipede', types: ['fire', 'bug'], generation: 8, legendary: false },
+  851: { name: 'Centiskorch', types: ['fire', 'bug'], generation: 8, legendary: false },
+  852: { name: 'Clobbopus', types: ['fighting'], generation: 8, legendary: false },
+  853: { name: 'Grapploct', types: ['fighting'], generation: 8, legendary: false },
+  854: { name: 'Sinistea', types: ['ghost'], generation: 8, legendary: false },
+  855: { name: 'Polteageist', types: ['ghost'], generation: 8, legendary: false },
+  856: { name: 'Hatenna', types: ['psychic'], generation: 8, legendary: false },
+  857: { name: 'Hattrem', types: ['psychic'], generation: 8, legendary: false },
+  858: { name: 'Hatterene', types: ['psychic', 'fairy'], generation: 8, legendary: false },
+  859: { name: 'Impidimp', types: ['dark', 'fairy'], generation: 8, legendary: false },
+  860: { name: 'Morgrem', types: ['dark', 'fairy'], generation: 8, legendary: false },
+  861: { name: 'Grimmsnarl', types: ['dark', 'fairy'], generation: 8, legendary: false },
+  862: { name: 'Obstagoon', types: ['dark', 'normal'], generation: 8, legendary: false },
+  863: { name: 'Perrserker', types: ['steel'], generation: 8, legendary: false },
+  864: { name: 'Cursola', types: ['ghost'], generation: 8, legendary: false },
+  865: { name: 'Sirfetch\'d', types: ['fighting'], generation: 8, legendary: false },
+  866: { name: 'Mr. Rime', types: ['ice', 'psychic'], generation: 8, legendary: false },
+  867: { name: 'Runerigus', types: ['ground', 'ghost'], generation: 8, legendary: false },
+  868: { name: 'Milcery', types: ['fairy'], generation: 8, legendary: false },
+  869: { name: 'Alcremie', types: ['fairy'], generation: 8, legendary: false },
+  870: { name: 'Falinks', types: ['fighting'], generation: 8, legendary: false },
+  871: { name: 'Pincurchin', types: ['electric'], generation: 8, legendary: false },
+  872: { name: 'Snom', types: ['ice', 'bug'], generation: 8, legendary: false },
+  873: { name: 'Frosmoth', types: ['ice', 'bug'], generation: 8, legendary: false },
+  874: { name: 'Stonjourner', types: ['rock'], generation: 8, legendary: false },
+  875: { name: 'Eiscue', types: ['ice'], generation: 8, legendary: false },
+  876: { name: 'Indeedee', types: ['psychic', 'normal'], generation: 8, legendary: false },
+  877: { name: 'Morpeko', types: ['electric', 'dark'], generation: 8, legendary: false },
+  878: { name: 'Cufant', types: ['steel'], generation: 8, legendary: false },
+  879: { name: 'Copperajah', types: ['steel'], generation: 8, legendary: false },
+  880: { name: 'Dracozolt', types: ['electric', 'dragon'], generation: 8, legendary: false },
+  881: { name: 'Arctozolt', types: ['electric', 'ice'], generation: 8, legendary: false },
+  882: { name: 'Dracovish', types: ['water', 'dragon'], generation: 8, legendary: false },
+  883: { name: 'Arctovish', types: ['water', 'ice'], generation: 8, legendary: false },
+  884: { name: 'Duraludon', types: ['steel', 'dragon'], generation: 8, legendary: false },
+  885: { name: 'Dreepy', types: ['dragon', 'ghost'], generation: 8, legendary: false },
+  886: { name: 'Drakloak', types: ['dragon', 'ghost'], generation: 8, legendary: false },
+  887: { name: 'Dragapult', types: ['dragon', 'ghost'], generation: 8, legendary: false },
+  888: { name: 'Zacian', types: ['fairy', 'steel'], generation: 8, legendary: true },
+  889: { name: 'Zamazenta', types: ['fighting', 'steel'], generation: 8, legendary: true },
+  890: { name: 'Eternatus', types: ['poison', 'dragon'], generation: 8, legendary: true },
+  891: { name: 'Kubfu', types: ['fighting'], generation: 8, legendary: false },
+  892: { name: 'Urshifu', types: ['fighting', 'water'], generation: 8, legendary: false },
+  893: { name: 'Zarude', types: ['dark', 'grass'], generation: 8, legendary: true },
+  894: { name: 'Regieleki', types: ['electric'], generation: 8, legendary: true },
+  895: { name: 'Regidrago', types: ['dragon'], generation: 8, legendary: true },
+  896: { name: 'Glastrier', types: ['ice'], generation: 8, legendary: true },
+  897: { name: 'Spectrier', types: ['ghost'], generation: 8, legendary: true },
+  898: { name: 'Calyrex', types: ['psychic', 'grass'], generation: 8, legendary: true },
+  899: { name: 'Wyrdeer', types: ['normal', 'psychic'], generation: 8, legendary: false },
+  900: { name: 'Kleavor', types: ['bug', 'rock'], generation: 8, legendary: false },
+  901: { name: 'Ursaluna', types: ['ground', 'normal'], generation: 8, legendary: false },
+  902: { name: 'Basculegion', types: ['water', 'ghost'], generation: 8, legendary: false },
+  903: { name: 'Sneasler', types: ['fighting', 'poison'], generation: 8, legendary: false },
+  904: { name: 'Overqwil', types: ['dark', 'poison'], generation: 8, legendary: false },
+  905: { name: 'Enamorus', types: ['fairy', 'flying'], generation: 8, legendary: true },
 
-const PokemonModal = ({ pokemon, id, onClose }) => {
-  const { sprite, loading, placeholder } = useSprite(id, 'official', 'large', { 
-    pokemonName: pokemon.name 
-  })
+  // Generación 9 - Paldea (906-1025)
+  906: { name: 'Sprigatito', types: ['grass'], generation: 9, legendary: false },
+  907: { name: 'Floragato', types: ['grass'], generation: 9, legendary: false },
+  908: { name: 'Meowscarada', types: ['grass', 'dark'], generation: 9, legendary: false },
+  909: { name: 'Fuecoco', types: ['fire'], generation: 9, legendary: false },
+  910: { name: 'Crocalor', types: ['fire'], generation: 9, legendary: false },
+  911: { name: 'Skeledirge', types: ['fire', 'ghost'], generation: 9, legendary: false },
+  912: { name: 'Quaxly', types: ['water'], generation: 9, legendary: false },
+  913: { name: 'Quaxwell', types: ['water'], generation: 9, legendary: false },
+  914: { name: 'Quaquaval', types: ['water', 'fighting'], generation: 9, legendary: false },
+  915: { name: 'Lechonk', types: ['normal'], generation: 9, legendary: false },
+  916: { name: 'Oinkologne', types: ['normal'], generation: 9, legendary: false },
+  917: { name: 'Tarountula', types: ['bug'], generation: 9, legendary: false },
+  918: { name: 'Spidops', types: ['bug'], generation: 9, legendary: false },
+  919: { name: 'Nymble', types: ['bug'], generation: 9, legendary: false },
+  920: { name: 'Lokix', types: ['bug', 'dark'], generation: 9, legendary: false },
+  921: { name: 'Pawmi', types: ['electric'], generation: 9, legendary: false },
+  922: { name: 'Pawmo', types: ['electric', 'fighting'], generation: 9, legendary: false },
+  923: { name: 'Pawmot', types: ['electric', 'fighting'], generation: 9, legendary: false },
+  924: { name: 'Tandemaus', types: ['normal', 'fairy'], generation: 9, legendary: false },
+  925: { name: 'Maushold', types: ['normal', 'fairy'], generation: 9, legendary: false },
+  926: { name: 'Fidough', types: ['fairy'], generation: 9, legendary: false },
+  927: { name: 'Dachsbun', types: ['fairy'], generation: 9, legendary: false },
+  928: { name: 'Smoliv', types: ['grass', 'normal'], generation: 9, legendary: false },
+  929: { name: 'Dolliv', types: ['grass', 'normal'], generation: 9, legendary: false },
+  930: { name: 'Arboliva', types: ['grass', 'normal'], generation: 9, legendary: false },
+  931: { name: 'Squawkabilly', types: ['normal', 'flying'], generation: 9, legendary: false },
+  932: { name: 'Nacli', types: ['rock'], generation: 9, legendary: false },
+  933: { name: 'Naclstack', types: ['rock'], generation: 9, legendary: false },
+  934: { name: 'Garganacl', types: ['rock'], generation: 9, legendary: false },
+  935: { name: 'Charcadet', types: ['fire'], generation: 9, legendary: false },
+  936: { name: 'Armarouge', types: ['fire', 'psychic'], generation: 9, legendary: false },
+  937: { name: 'Ceruledge', types: ['fire', 'ghost'], generation: 9, legendary: false },
+  938: { name: 'Tadbulb', types: ['electric'], generation: 9, legendary: false },
+  939: { name: 'Bellibolt', types: ['electric'], generation: 9, legendary: false },
+  940: { name: 'Wattrel', types: ['electric', 'flying'], generation: 9, legendary: false },
+  941: { name: 'Kilowattrel', types: ['electric', 'flying'], generation: 9, legendary: false },
+  942: { name: 'Maschiff', types: ['dark'], generation: 9, legendary: false },
+  943: { name: 'Mabosstiff', types: ['dark'], generation: 9, legendary: false },
+  944: { name: 'Shroodle', types: ['poison', 'normal'], generation: 9, legendary: false },
+  945: { name: 'Grafaiai', types: ['poison', 'normal'], generation: 9, legendary: false },
+  946: { name: 'Bramblin', types: ['grass', 'ghost'], generation: 9, legendary: false },
+  947: { name: 'Brambleghast', types: ['grass', 'ghost'], generation: 9, legendary: false },
+  948: { name: 'Toedscool', types: ['ground', 'grass'], generation: 9, legendary: false },
+  949: { name: 'Toedscruel', types: ['ground', 'grass'], generation: 9, legendary: false },
+  950: { name: 'Klawf', types: ['rock'], generation: 9, legendary: false },
+  951: { name: 'Capsakid', types: ['grass'], generation: 9, legendary: false },
+  952: { name: 'Scovillain', types: ['grass', 'fire'], generation: 9, legendary: false },
+  953: { name: 'Rellor', types: ['bug'], generation: 9, legendary: false },
+  954: { name: 'Rabsca', types: ['bug', 'psychic'], generation: 9, legendary: false },
+  955: { name: 'Flittle', types: ['psychic'], generation: 9, legendary: false },
+  956: { name: 'Espathra', types: ['psychic'], generation: 9, legendary: false },
+  957: { name: 'Tinkatink', types: ['fairy', 'steel'], generation: 9, legendary: false },
+  958: { name: 'Tinkatuff', types: ['fairy', 'steel'], generation: 9, legendary: false },
+  959: { name: 'Tinkaton', types: ['fairy', 'steel'], generation: 9, legendary: false },
+  960: { name: 'Wiglett', types: ['water'], generation: 9, legendary: false },
+  961: { name: 'Wugtrio', types: ['water'], generation: 9, legendary: false },
+  962: { name: 'Bombirdier', types: ['flying', 'dark'], generation: 9, legendary: false },
+  963: { name: 'Finizen', types: ['water'], generation: 9, legendary: false },
+  964: { name: 'Palafin', types: ['water'], generation: 9, legendary: false },
+  965: { name: 'Varoom', types: ['steel', 'poison'], generation: 9, legendary: false },
+  966: { name: 'Revavroom', types: ['steel', 'poison'], generation: 9, legendary: false },
+  967: { name: 'Cyclizar', types: ['dragon', 'normal'], generation: 9, legendary: false },
+  968: { name: 'Orthworm', types: ['steel'], generation: 9, legendary: false },
+  969: { name: 'Glimmet', types: ['rock', 'poison'], generation: 9, legendary: false },
+  970: { name: 'Glimmora', types: ['rock', 'poison'], generation: 9, legendary: false },
+  971: { name: 'Greavard', types: ['ghost'], generation: 9, legendary: false },
+  972: { name: 'Houndstone', types: ['ghost'], generation: 9, legendary: false },
+  973: { name: 'Flamigo', types: ['flying', 'fighting'], generation: 9, legendary: false },
+  974: { name: 'Cetoddle', types: ['ice'], generation: 9, legendary: false },
+  975: { name: 'Cetitan', types: ['ice'], generation: 9, legendary: false },
+  976: { name: 'Veluza', types: ['water', 'psychic'], generation: 9, legendary: false },
+  977: { name: 'Dondozo', types: ['water'], generation: 9, legendary: false },
+  978: { name: 'Tatsugiri', types: ['dragon', 'water'], generation: 9, legendary: false },
+  979: { name: 'Annihilape', types: ['fighting', 'ghost'], generation: 9, legendary: false },
+  980: { name: 'Clodsire', types: ['poison', 'ground'], generation: 9, legendary: false },
+  981: { name: 'Farigiraf', types: ['normal', 'psychic'], generation: 9, legendary: false },
+  982: { name: 'Dudunsparce', types: ['normal'], generation: 9, legendary: false },
+  983: { name: 'Kingambit', types: ['dark', 'steel'], generation: 9, legendary: false },
+  984: { name: 'Great Tusk', types: ['ground', 'fighting'], generation: 9, legendary: false },
+  985: { name: 'Scream Tail', types: ['fairy', 'psychic'], generation: 9, legendary: false },
+  986: { name: 'Brute Bonnet', types: ['grass', 'dark'], generation: 9, legendary: false },
+  987: { name: 'Flutter Mane', types: ['ghost', 'fairy'], generation: 9, legendary: false },
+  988: { name: 'Slither Wing', types: ['bug', 'fighting'], generation: 9, legendary: false },
+  989: { name: 'Sandy Shocks', types: ['electric', 'ground'], generation: 9, legendary: false },
+  990: { name: 'Iron Treads', types: ['ground', 'steel'], generation: 9, legendary: false },
+  991: { name: 'Iron Bundle', types: ['ice', 'water'], generation: 9, legendary: false },
+  992: { name: 'Iron Hands', types: ['fighting', 'electric'], generation: 9, legendary: false },
+  993: { name: 'Iron Jugulis', types: ['dark', 'flying'], generation: 9, legendary: false },
+  994: { name: 'Iron Moth', types: ['fire', 'poison'], generation: 9, legendary: false },
+  995: { name: 'Iron Thorns', types: ['rock', 'electric'], generation: 9, legendary: false },
+  996: { name: 'Frigibax', types: ['dragon', 'ice'], generation: 9, legendary: false },
+  997: { name: 'Arctibax', types: ['dragon', 'ice'], generation: 9, legendary: false },
+  998: { name: 'Baxcalibur', types: ['dragon', 'ice'], generation: 9, legendary: false },
+  999: { name: 'Gimmighoul', types: ['ghost'], generation: 9, legendary: false },
+  1000: { name: 'Gholdengo', types: ['steel', 'ghost'], generation: 9, legendary: false },
+  1001: { name: 'Wo-Chien', types: ['dark', 'grass'], generation: 9, legendary: true },
+  1002: { name: 'Chien-Pao', types: ['dark', 'ice'], generation: 9, legendary: true },
+  1003: { name: 'Ting-Lu', types: ['dark', 'ground'], generation: 9, legendary: true },
+  1004: { name: 'Chi-Yu', types: ['dark', 'fire'], generation: 9, legendary: true },
+  1005: { name: 'Roaring Moon', types: ['dragon', 'dark'], generation: 9, legendary: false },
+  1006: { name: 'Iron Valiant', types: ['fairy', 'fighting'], generation: 9, legendary: false },
+  1007: { name: 'Koraidon', types: ['fighting', 'dragon'], generation: 9, legendary: true },
+  1008: { name: 'Miraidon', types: ['electric', 'dragon'], generation: 9, legendary: true },
+  1009: { name: 'Walking Wake', types: ['water', 'dragon'], generation: 9, legendary: false },
+  1010: { name: 'Iron Leaves', types: ['grass', 'psychic'], generation: 9, legendary: false },
+  1011: { name: 'Dipplin', types: ['grass', 'dragon'], generation: 9, legendary: false },
+  1012: { name: 'Poltchageist', types: ['grass', 'ghost'], generation: 9, legendary: false },
+  1013: { name: 'Sinistcha', types: ['grass', 'ghost'], generation: 9, legendary: false },
+  1014: { name: 'Okidogi', types: ['poison', 'fighting'], generation: 9, legendary: true },
+  1015: { name: 'Munkidori', types: ['poison', 'psychic'], generation: 9, legendary: true },
+  1016: { name: 'Fezandipiti', types: ['poison', 'fairy'], generation: 9, legendary: true },
+  1017: { name: 'Ogerpon', types: ['grass'], generation: 9, legendary: true },
+  1018: { name: 'Archaludon', types: ['steel', 'dragon'], generation: 9, legendary: false },
+  1019: { name: 'Hydrapple', types: ['grass', 'dragon'], generation: 9, legendary: false },
+  1020: { name: 'Gouging Fire', types: ['fire', 'dragon'], generation: 9, legendary: false },
+  1021: { name: 'Raging Bolt', types: ['electric', 'dragon'], generation: 9, legendary: false },
+  1022: { name: 'Iron Boulder', types: ['rock', 'psychic'], generation: 9, legendary: false },
+  1023: { name: 'Iron Crown', types: ['steel', 'psychic'], generation: 9, legendary: false },
+  1024: { name: 'Terapagos', types: ['normal'], generation: 9, legendary: true },
+  1025: { name: 'Pecharunt', types: ['poison', 'ghost'], generation: 9, legendary: true },
+};
 
-  if (!pokemon) return null
+export default function Pokedex() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedType, setSelectedType] = useState('');
+  const [selectedGeneration, setSelectedGeneration] = useState('');
+  const [showCaught, setShowCaught] = useState(false);
+  const [caughtIds, setCaughtIds] = useState(new Set());
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
-  return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-6 max-w-md w-full shadow-2xl">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-white flex items-center">
-            {pokemon.name}
-            {pokemon.legendary && <span className="ml-2 text-yellow-400">⭐</span>}
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-white hover:text-gray-300 text-2xl"
-          >
-            ×
-          </button>
-        </div>
-        
-        <div className="text-center mb-6">
-          <div className="w-48 h-48 mx-auto mb-4 flex items-center justify-center">
-            {loading ? (
-              <div className="w-48 h-48 bg-gray-300 rounded-lg animate-pulse"></div>
-            ) : (
-              <img 
-                src={sprite || placeholder} 
-                alt={pokemon.name}
-                className="w-full h-full object-contain"
-              />
-            )}
-          </div>
-          
-          <p className="text-lg font-bold text-white mb-2">
-            #{id.toString().padStart(3, '0')}
-          </p>
-          
-          <div className="flex justify-center space-x-2 mb-4">
-            {pokemon.types.map((type) => (
-              <span 
-                key={type}
-                className={`
-                  px-3 py-1 rounded-full font-bold text-white
-                  ${TYPE_COLORS[type] || 'bg-gray-500'}
-                `}
-              >
-                {type.charAt(0).toUpperCase() + type.slice(1)}
-              </span>
-            ))}
-          </div>
-          
-          <div className="bg-white/10 rounded-xl p-4">
-            <p className="text-white mb-2">
-              <strong>Generación:</strong> {pokemon.generation}
-            </p>
-            <p className="text-white">
-              <strong>Tipo:</strong> {pokemon.legendary ? 'Legendario' : 'Normal'}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+  useEffect(() => {
+    const storedCaught = localStorage.getItem('caughtPokemon');
+    if (storedCaught) {
+      setCaughtIds(new Set(JSON.parse(storedCaught)));
+    }
+  }, []);
 
-export default function Pokedex({ collection = [] }) {
-  const [selectedPokemon, setSelectedPokemon] = useState(null)
-  const [filter, setFilter] = useState('all')
-  const [typeFilter, setTypeFilter] = useState('all')
-  const [searchTerm, setSearchTerm] = useState('')
+  useEffect(() => {
+    localStorage.setItem('caughtPokemon', JSON.stringify(Array.from(caughtIds)));
+  }, [caughtIds]);
 
-  const caughtIds = useMemo(() => {
-    return new Set(collection.map(pokemon => pokemon.id))
-  }, [collection])
+  const allTypes = useMemo(() => {
+    const types = new Set();
+    Object.values(POKEMON_DATA).forEach(pokemon => {
+      pokemon.types.forEach(type => types.add(type));
+    });
+    return Array.from(types).sort();
+  }, []);
+
+  const allGenerations = useMemo(() => {
+    const generations = new Set();
+    Object.values(POKEMON_DATA).forEach(pokemon => {
+      generations.add(pokemon.generation);
+    });
+    return Array.from(generations).sort((a, b) => a - b);
+  }, []);
 
   const filteredPokemon = useMemo(() => {
     return Object.entries(POKEMON_DATA).filter(([id, pokemon]) => {
-      const pokemonId = parseInt(id)
-      const isCaught = caughtIds.has(pokemonId)
-      
-      // Filtro por capturado/no capturado
-      if (filter === 'caught' && !isCaught) return false
-      if (filter === 'uncaught' && isCaught) return false
-      
-      // Filtro por legendario
-      if (filter === 'legendary' && !pokemon.legendary) return false
-      
-      // Filtro por tipo
-      if (typeFilter !== 'all' && !pokemon.types.includes(typeFilter)) return false
-      
-      // Filtro por búsqueda
-      if (searchTerm && !pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())) return false
-      
-      return true
-    })
-  }, [filter, typeFilter, searchTerm, caughtIds])
+      const matchesSearch = pokemon.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesType = selectedType ? pokemon.types.includes(selectedType) : true;
+      const matchesGeneration = selectedGeneration ? pokemon.generation === parseInt(selectedGeneration) : true;
+      const matchesCaught = showCaught ? caughtIds.has(parseInt(id)) : true;
 
-  const stats = useMemo(() => {
-    const totalPokemon = Object.keys(POKEMON_DATA).length
-    const caught = caughtIds.size
-    const legendary = Object.values(POKEMON_DATA).filter(p => p.legendary).length
-    const legendaryCanght = Object.entries(POKEMON_DATA)
-      .filter(([id, pokemon]) => pokemon.legendary && caughtIds.has(parseInt(id)))
-      .length
-    
-    return {
-      total: totalPokemon,
-      caught,
-      percentage: Math.round((caught / totalPokemon) * 100),
-      legendary,
-      legendaryCanght
-    }
-  }, [caughtIds])
+      return matchesSearch && matchesType && matchesGeneration && matchesCaught;
+    });
+  }, [searchTerm, selectedType, selectedGeneration, showCaught, caughtIds]);
 
-  const allTypes = useMemo(() => {
-    const types = new Set()
-    Object.values(POKEMON_DATA).forEach(pokemon => {
-      pokemon.types.forEach(type => types.add(type))
-    })
-    return Array.from(types).sort()
-  }, [])
+  const toggleCaught = (id) => {
+    setCaughtIds(prevCaughtIds => {
+      const newCaughtIds = new Set(prevCaughtIds);
+      if (newCaughtIds.has(id)) {
+        newCaughtIds.delete(id);
+      } else {
+        newCaughtIds.add(id);
+      }
+      return newCaughtIds;
+    });
+  };
 
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl font-bold text-white flex items-center">
-            📖 Pokédex Nacional
-          </h2>
-          <div className="text-right">
-            <p className="text-white font-bold text-lg">
-              {stats.caught}/{stats.total} ({stats.percentage}%)
-            </p>
-            <p className="text-yellow-400 font-bold">
-              ⭐ {stats.legendaryCanght}/{stats.legendary} Legendarios
-            </p>
-          </div>
-        </div>
-        
-        {/* Filtros */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div>
-            <label className="block text-white font-bold mb-2">Filtrar por:</label>
+    <div className="min-h-screen bg-gray-800 p-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-5xl font-bold text-center text-white mb-8">Pokédex</h1>
+
+        {/* Controles de filtro y búsqueda */}
+        <div className="bg-gray-700/60 backdrop-blur-md rounded-lg shadow-xl p-6 mb-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="w-full sm:w-auto flex-grow">
+            <label htmlFor="type-select" className="block text-white font-bold mb-2">Tipo:</label>
             <select
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="w-full bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 text-white"
+              id="type-select"
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="w-full bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 text-white appearance-none pr-8"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3e%3cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'%3e%3c/path%3e%3c/svg%3e")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 0.5rem center',
+                backgroundSize: '1.5em 1.5em',
+              }}
             >
-              <option value="all">Todos</option>
-              <option value="caught">Capturados</option>
-              <option value="uncaught">No Capturados</option>
-              <option value="legendary">Legendarios</option>
-            </select>
-          </div>
-          
-          <div>
-            <label className="block text-white font-bold mb-2">Tipo:</label>
-            <select
-              value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value)}
-              className="w-full bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 text-white"
-            >
-              <option value="all">Todos los tipos</option>
+              <option value="">Todos los tipos</option>
               {allTypes.map(type => (
-                <option key={type} value={type}>
-                  {type.charAt(0).toUpperCase() + type.slice(1)}
-                </option>
+                <option key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</option>
               ))}
             </select>
           </div>
-          
-          <div>
-            <label className="block text-white font-bold mb-2">Buscar:</label>
+
+          <div className="w-full sm:w-auto flex-grow">
+            <label htmlFor="generation-select" className="block text-white font-bold mb-2">Generación:</label>
+            <select
+              id="generation-select"
+              value={selectedGeneration}
+              onChange={(e) => setSelectedGeneration(e.target.value)}
+              className="w-full bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 text-white appearance-none pr-8"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3e%3cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'%3e%3c/path%3e%3c/svg%3e")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 0.5rem center',
+                backgroundSize: '1.5em 1.5em',
+              }}
+            >
+              <option value="">Todas las generaciones</option>
+              {allGenerations.map(gen => (
+                <option key={gen} value={gen}>Generación {gen}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="w-full sm:w-auto">
+            <label className="inline-flex items-center text-white font-bold mb-2 sm:mb-0">
+              <input
+                type="checkbox"
+                className="form-checkbox h-5 w-5 text-red-600"
+                checked={showCaught}
+                onChange={() => setShowCaught(!showCaught)}
+              />
+              <span className="ml-2">Mostrar atrapados</span>
+            </label>
+          </div>
+
+          <div className="w-full sm:w-auto flex-grow">
+            <label htmlFor="search-input" className="block text-white font-bold mb-2">Buscar:</label>
             <input
               type="text"
               placeholder="Nombre del Pokémon..."
@@ -988,9 +1204,158 @@ export default function Pokedex({ collection = [] }) {
         <PokemonModal
           pokemon={selectedPokemon.pokemon}
           id={selectedPokemon.id}
+          caught={caughtIds.has(selectedPokemon.id)}
           onClose={() => setSelectedPokemon(null)}
+          onToggleCaught={() => toggleCaught(selectedPokemon.id)}
         />
       )}
     </div>
-  )
+  );
+}
+
+// src/components/PokemonCard.jsx
+import { useSprite } from '../hooks/useSprite';
+
+function PokemonCard({ pokemon, id, caught, onClick }) {
+  const spriteUrl = useSprite(id);
+
+  const cardClasses = `
+    relative bg-gray-700/60 backdrop-blur-md rounded-lg shadow-xl p-4
+    flex flex-col items-center justify-center text-white cursor-pointer
+    transition-all duration-300 hover:scale-105 hover:shadow-2xl
+    ${caught ? 'border-4 border-yellow-400' : 'border-4 border-transparent'}
+  `;
+
+  return (
+    <div className={cardClasses} onClick={() => onClick(pokemon, id)}>
+      {caught && (
+        <div className="absolute top-2 right-2 text-yellow-400 text-2xl">
+          &#10003;
+        </div>
+      )}
+      <img src={spriteUrl} alt={pokemon.name} className="w-24 h-24 mb-2 pixelated" />
+      <h2 className="text-xl font-bold capitalize">{pokemon.name}</h2>
+      <p className="text-sm text-gray-300">#{String(id).padStart(3, '0')}</p>
+      <div className="flex space-x-2 mt-2">
+        {pokemon.types.map(type => (
+          <span
+            key={type}
+            className={`px-3 py-1 rounded-full text-xs font-semibold
+              ${type === 'grass' ? 'bg-green-600' : ''}
+              ${type === 'fire' ? 'bg-red-600' : ''}
+              ${type === 'water' ? 'bg-blue-600' : ''}
+              ${type === 'bug' ? 'bg-lime-600' : ''}
+              ${type === 'normal' ? 'bg-gray-500' : ''}
+              ${type === 'poison' ? 'bg-purple-600' : ''}
+              ${type === 'electric' ? 'bg-yellow-500' : ''}
+              ${type === 'ground' ? 'bg-yellow-800' : ''}
+              ${type === 'fairy' ? 'bg-pink-400' : ''}
+              ${type === 'fighting' ? 'bg-orange-700' : ''}
+              ${type === 'psychic' ? 'bg-fuchsia-600' : ''}
+              ${type === 'rock' ? 'bg-amber-800' : ''}
+              ${type === 'ghost' ? 'bg-indigo-700' : ''}
+              ${type === 'ice' ? 'bg-cyan-400' : ''}
+              ${type === 'dragon' ? 'bg-indigo-900' : ''}
+              ${type === 'steel' ? 'bg-blue-gray-400' : ''}
+              ${type === 'dark' ? 'bg-gray-900' : ''}
+              ${type === 'flying' ? 'bg-indigo-400' : ''}
+            `}
+          >
+            {type.charAt(0).toUpperCase() + type.slice(1)}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// src/components/PokemonModal.jsx
+import { useSprite } from '../hooks/useSprite';
+
+function PokemonModal({ pokemon, id, caught, onClose, onToggleCaught }) {
+  const spriteUrl = useSprite(id, true); // large sprite
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+      <div className="bg-gray-800 rounded-lg shadow-xl p-8 relative w-11/12 max-w-md">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-white text-3xl font-bold leading-none hover:text-gray-400"
+        >
+          &times;
+        </button>
+
+        <div className="flex flex-col items-center">
+          <img src={spriteUrl} alt={pokemon.name} className="w-48 h-48 mb-4 pixelated" />
+          <h2 className="text-4xl font-bold capitalize text-white mb-2">{pokemon.name}</h2>
+          <p className="text-xl text-gray-300 mb-4">#{String(id).padStart(3, '0')}</p>
+          
+          <div className="flex space-x-3 mb-4">
+            {pokemon.types.map(type => (
+              <span
+                key={type}
+                className={`px-4 py-2 rounded-full text-lg font-semibold text-white
+                  ${type === 'grass' ? 'bg-green-600' : ''}
+                  ${type === 'fire' ? 'bg-red-600' : ''}
+                  ${type === 'water' ? 'bg-blue-600' : ''}
+                  ${type === 'bug' ? 'bg-lime-600' : ''}
+                  ${type === 'normal' ? 'bg-gray-500' : ''}
+                  ${type === 'poison' ? 'bg-purple-600' : ''}
+                  ${type === 'electric' ? 'bg-yellow-500' : ''}
+                  ${type === 'ground' ? 'bg-yellow-800' : ''}
+                  ${type === 'fairy' ? 'bg-pink-400' : ''}
+                  ${type === 'fighting' ? 'bg-orange-700' : ''}
+                  ${type === 'psychic' ? 'bg-fuchsia-600' : ''}
+                  ${type === 'rock' ? 'bg-amber-800' : ''}
+                  ${type === 'ghost' ? 'bg-indigo-700' : ''}
+                  ${type === 'ice' ? 'bg-cyan-400' : ''}
+                  ${type === 'dragon' ? 'bg-indigo-900' : ''}
+                  ${type === 'steel' ? 'bg-blue-gray-400' : ''}
+                  ${type === 'dark' ? 'bg-gray-900' : ''}
+                  ${type === 'flying' ? 'bg-indigo-400' : ''}
+                `}
+              >
+                {type.charAt(0).toUpperCase() + type.slice(1)}
+              </span>
+            ))}
+          </div>
+
+          <p className="text-white text-lg mb-2">Generación: {pokemon.generation}</p>
+          <p className="text-white text-lg mb-4">Legendario: {pokemon.legendary ? 'Sí' : 'No'}</p>
+
+          <button
+            onClick={onToggleCaught}
+            className={`w-full py-3 rounded-lg text-xl font-bold
+              ${caught ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-blue-500 hover:bg-blue-600'}
+              text-white transition-colors duration-200
+            `}
+          >
+            {caught ? 'Liberar Pokémon' : 'Atrapar Pokémon'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// src/hooks/useSprite.js
+import { useState, useEffect } from 'react';
+
+export function useSprite(id, large = false) {
+  const [spriteUrl, setSpriteUrl] = useState('');
+
+  useEffect(() => {
+    const fetchSprite = async () => {
+      const spriteId = String(id).padStart(3, '0');
+      const url = large 
+        ? `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${spriteId}.png`
+        : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+      
+      setSpriteUrl(url);
+    };
+
+    fetchSprite();
+  }, [id, large]);
+
+  return spriteUrl;
 }
