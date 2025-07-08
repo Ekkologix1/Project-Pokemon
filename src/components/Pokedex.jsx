@@ -1119,7 +1119,7 @@ export default function Pokedex() {
               id="type-select"
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="w-full bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 text-white appearance-none pr-8"
+              className="w-full bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 text-Black appearance-none pr-8"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3e%3cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'%3e%3c/path%3e%3c/svg%3e")`,
                 backgroundRepeat: 'no-repeat',
@@ -1140,7 +1140,7 @@ export default function Pokedex() {
               id="generation-select"
               value={selectedGeneration}
               onChange={(e) => setSelectedGeneration(e.target.value)}
-              className="w-full bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 text-white appearance-none pr-8"
+              className="w-full bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 text-gray-900 appearance-none pr-8"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3e%3cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'%3e%3c/path%3e%3c/svg%3e")`,
                 backgroundRepeat: 'no-repeat',
@@ -1214,3 +1214,4 @@ export default function Pokedex() {
     </div>
   );
 }
+

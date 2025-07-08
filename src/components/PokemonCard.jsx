@@ -1,17 +1,13 @@
 // src/components/PokemonCard.jsx
-import { useSprite } from '../hooks/useSimpleSprite';
+import { useState } from 'react';
 
 function PokemonCard({ pokemon, id, caught, onClick }) {
-  const { sprite, loading, error, placeholder } = useSprite(id, 'official', 'medium', {
-    pokemonName: pokemon.name,
-    enablePlaceholder: true,
-    autoRetry: true,
-    maxRetries: 3
-  });
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
 
-  // Determinar qué imagen mostrar
-  const imageUrl = sprite || placeholder || '';
-  const imageAlt = pokemon.name;
+  // URL del sprite oficial de Pokémon
+  const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+  const fallbackImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
   const cardClasses = `
     relative bg-gray-700/60 backdrop-blur-md rounded-lg shadow-xl p-4
@@ -19,6 +15,16 @@ function PokemonCard({ pokemon, id, caught, onClick }) {
     transition-all duration-300 hover:scale-105 hover:shadow-2xl
     ${caught ? 'border-4 border-yellow-400' : 'border-4 border-transparent'}
   `;
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+    setImageLoading(false);
+  };
 
   return (
     <div className={cardClasses} onClick={() => onClick(pokemon, id)}>
@@ -29,24 +35,32 @@ function PokemonCard({ pokemon, id, caught, onClick }) {
       )}
       
       <div className="relative w-24 h-24 mb-2">
-        {loading && !placeholder && (
+        {imageLoading && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
           </div>
         )}
         
-        {error && !placeholder && (
+        {imageError && !imageLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-600 rounded">
             <span className="text-red-400 text-xs">Error</span>
           </div>
         )}
         
-        {imageUrl && (
+        {!imageError && (
           <img 
             src={imageUrl} 
-            alt={imageAlt} 
-            className={`w-full h-full pixelated ${loading ? 'opacity-50' : ''}`}
-            onError={() => console.warn(`Failed to load sprite for ${pokemon.name}`)}
+            alt={pokemon.name} 
+            className={`w-full h-full object-contain ${imageLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+            onLoad={handleImageLoad}
+            onError={(e) => {
+              // Intentar con la imagen de fallback
+              if (e.target.src === imageUrl) {
+                e.target.src = fallbackImageUrl;
+              } else {
+                handleImageError();
+              }
+            }}
           />
         )}
       </div>

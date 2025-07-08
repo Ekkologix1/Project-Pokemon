@@ -1,17 +1,41 @@
 // src/components/PokemonModal.jsx
-import { useSprite } from '../hooks/useSimpleSprite';
+import { useState } from 'react';
 
 function PokemonModal({ pokemon, id, caught, onClose, onToggleCaught }) {
-  const { sprite, loading, error, placeholder, reload } = useSprite(id, 'official', 'xl', {
-    pokemonName: pokemon.name,
-    enablePlaceholder: true,
-    autoRetry: true,
-    maxRetries: 3
-  });
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
 
-  // Determinar qué imagen mostrar
-  const imageUrl = sprite || placeholder || '';
-  const imageAlt = pokemon.name;
+  // URL del sprite oficial de Pokémon en alta resolución
+  const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+  const fallbackImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
+  const secondFallbackUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+    setImageError(false);
+  };
+
+  const handleImageError = (e) => {
+    // Intentar con URLs de fallback
+    if (e.target.src === imageUrl) {
+      e.target.src = fallbackImageUrl;
+    } else if (e.target.src === fallbackImageUrl) {
+      e.target.src = secondFallbackUrl;
+    } else {
+      setImageError(true);
+      setImageLoading(false);
+    }
+  };
+
+  const handleRetry = () => {
+    setImageError(false);
+    setImageLoading(true);
+    // Forzar recarga de la imagen
+    const imgElement = document.querySelector('#pokemon-modal-image');
+    if (imgElement) {
+      imgElement.src = imageUrl;
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
@@ -25,18 +49,18 @@ function PokemonModal({ pokemon, id, caught, onClose, onToggleCaught }) {
 
         <div className="flex flex-col items-center">
           <div className="relative w-48 h-48 mb-4">
-            {loading && !placeholder && (
+            {imageLoading && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
               </div>
             )}
             
-            {error && !placeholder && (
+            {imageError && !imageLoading && (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-600 rounded">
                 <div className="text-center">
                   <span className="text-red-400 text-sm block mb-2">Error al cargar</span>
                   <button 
-                    onClick={reload}
+                    onClick={handleRetry}
                     className="text-blue-400 text-xs hover:underline"
                   >
                     Reintentar
@@ -45,12 +69,14 @@ function PokemonModal({ pokemon, id, caught, onClose, onToggleCaught }) {
               </div>
             )}
             
-            {imageUrl && (
+            {!imageError && (
               <img 
+                id="pokemon-modal-image"
                 src={imageUrl} 
-                alt={imageAlt} 
-                className={`w-full h-full pixelated ${loading ? 'opacity-50' : ''}`}
-                onError={() => console.warn(`Failed to load large sprite for ${pokemon.name}`)}
+                alt={pokemon.name} 
+                className={`w-full h-full object-contain ${imageLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+                onLoad={handleImageLoad}
+                onError={handleImageError}
               />
             )}
           </div>
