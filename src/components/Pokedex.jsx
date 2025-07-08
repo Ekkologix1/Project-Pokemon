@@ -1,9 +1,8 @@
   // src/components/Pokedex.jsx
-import { useState, useEffect, useMemo } from 'react'
-import { useSprite } from '../hooks/useSprite'
-import PokemonCard from './PokemonCard'
-import PokemonModal from './PokemonModal'
-import Pokedex2 from './Pokedex2'
+import { useState, useEffect } from 'react';
+import PokemonCard from './PokemonCard';
+import PokemonModal from './PokemonModal';
+import pokemonData from '../data/pokemon.json';
 
 const POKEMON_DATA = {
   1: { name: 'Bulbasaur', types: ['grass', 'poison'], generation: 1, legendary: false },
@@ -133,152 +132,6 @@ const POKEMON_DATA = {
   125: { name: 'Electabuzz', types: ['electric'], generation: 1, legendary: false },
   126: { name: 'Magmar', types: ['fire'], generation: 1, legendary: false },
   127: { name: 'Pinsir', types: ['bug'], generation: 1, legendary: false },
-  128: { name: 'Tauros', types: ['normal'], generation: 1, legendary: false },
-  129: { name: 'Magikarp', types: ['water'], generation: 1, legendary: false },
-  130: { name: 'Gyarados', types: ['water', 'flying'], generation: 1, legendary: false },
-  131: { name: 'Lapras', types: ['water', 'ice'], generation: 1, legendary: false },
-  132: { name: 'Ditto', types: ['normal'], generation: 1, legendary: false },
-  133: { name: 'Eevee', types: ['normal'], generation: 1, legendary: false },
-  134: { name: 'Vaporeon', types: ['water'], generation: 1, legendary: false },
-  135: { name: 'Jolteon', types: ['electric'], generation: 1, legendary: false },
-  136: { name: 'Flareon', types: ['fire'], generation: 1, legendary: false },
-  137: { name: 'Porygon', types: ['normal'], generation: 1, legendary: false },
-  138: { name: 'Omanyte', types: ['rock', 'water'], generation: 1, legendary: false },
-  139: { name: 'Omastar', types: ['rock', 'water'], generation: 1, legendary: false },
-  140: { name: 'Kabuto', types: ['rock', 'water'], generation: 1, legendary: false },
-  141: { name: 'Kabutops', types: ['rock', 'water'], generation: 1, legendary: false },
-  142: { name: 'Aerodactyl', types: ['rock', 'flying'], generation: 1, legendary: false },
-  143: { name: 'Snorlax', types: ['normal'], generation: 1, legendary: false },
-  144: { name: 'Articuno', types: ['ice', 'flying'], generation: 1, legendary: true },
-  145: { name: 'Zapdos', types: ['electric', 'flying'], generation: 1, legendary: true },
-  146: { name: 'Moltres', types: ['fire', 'flying'], generation: 1, legendary: true },
-  147: { name: 'Dratini', types: ['dragon'], generation: 1, legendary: false },
-  148: { name: 'Dragonair', types: ['dragon'], generation: 1, legendary: false },
-  149: { name: 'Dragonite', types: ['dragon', 'flying'], generation: 1, legendary: false },
-  150: { name: 'Mewtwo', types: ['psychic'], generation: 1, legendary: true },
-  151: { name: 'Mew', types: ['psychic'], generation: 1, legendary: true },
-
-  // Generación 2 - Johto (152-251)
-  152: { name: 'Chikorita', types: ['grass'], generation: 2, legendary: false },
-  153: { name: 'Bayleef', types: ['grass'], generation: 2, legendary: false },
-  154: { name: 'Meganium', types: ['grass'], generation: 2, legendary: false },
-  155: { name: 'Cyndaquil', types: ['fire'], generation: 2, legendary: false },
-  156: { name: 'Quilava', types: ['fire'], generation: 2, legendary: false },
-  157: { name: 'Typhlosion', types: ['fire'], generation: 2, legendary: false },
-  158: { name: 'Totodile', types: ['water'], generation: 2, legendary: false },
-  159: { name: 'Croconaw', types: ['water'], generation: 2, legendary: false },
-  160: { name: 'Feraligatr', types: ['water'], generation: 2, legendary: false },
-  161: { name: 'Sentret', types: ['normal'], generation: 2, legendary: false },
-  162: { name: 'Furret', types: ['normal'], generation: 2, legendary: false },
-  163: { name: 'Hoothoot', types: ['normal', 'flying'], generation: 2, legendary: false },
-  164: { name: 'Noctowl', types: ['normal', 'flying'], generation: 2, legendary: false },
-  165: { name: 'Ledyba', types: ['bug', 'flying'], generation: 2, legendary: false },
-  166: { name: 'Ledian', types: ['bug', 'flying'], generation: 2, legendary: false },
-  167: { name: 'Spinarak', types: ['bug', 'poison'], generation: 2, legendary: false },
-  168: { name: 'Ariados', types: ['bug', 'poison'], generation: 2, legendary: false },
-  169: { name: 'Crobat', types: ['poison', 'flying'], generation: 2, legendary: false },
-  170: { name: 'Chinchou', types: ['water', 'electric'], generation: 2, legendary: false },
-  171: { name: 'Lanturn', types: ['water', 'electric'], generation: 2, legendary: false },
-  172: { name: 'Pichu', types: ['electric'], generation: 2, legendary: false },
-  173: { name: 'Cleffa', types: ['fairy'], generation: 2, legendary: false },
-  174: { name: 'Igglybuff', types: ['normal', 'fairy'], generation: 2, legendary: false },
-  175: { name: 'Togepi', types: ['fairy'], generation: 2, legendary: false },
-  176: { name: 'Togetic', types: ['fairy', 'flying'], generation: 2, legendary: false },
-  177: { name: 'Natu', types: ['psychic', 'flying'], generation: 2, legendary: false },
-  178: { name: 'Xatu', types: ['psychic', 'flying'], generation: 2, legendary: false },
-  179: { name: 'Mareep', types: ['electric'], generation: 2, legendary: false },
-  180: { name: 'Flaaffy', types: ['electric'], generation: 2, legendary: false },
-  181: { name: 'Ampharos', types: ['electric'], generation: 2, legendary: false },
-  182: { name: 'Bellossom', types: ['grass'], generation: 2, legendary: false },
-  183: { name: 'Marill', types: ['water', 'fairy'], generation: 2, legendary: false },
-  184: { name: 'Azumarill', types: ['water', 'fairy'], generation: 2, legendary: false },
-  185: { name: 'Sudowoodo', types: ['rock'], generation: 2, legendary: false },
-  186: { name: 'Politoed', types: ['water'], generation: 2, legendary: false },
-  187: { name: 'Hoppip', types: ['grass', 'flying'], generation: 2, legendary: false },
-  188: { name: 'Skiploom', types: ['grass', 'flying'], generation: 2, legendary: false },
-  189: { name: 'Jumpluff', types: ['grass', 'flying'], generation: 2, legendary: false },
-  190: { name: 'Aipom', types: ['normal'], generation: 2, legendary: false },
-  191: { name: 'Sunkern', types: ['grass'], generation: 2, legendary: false },
-  192: { name: 'Sunflora', types: ['grass'], generation: 2, legendary: false },
-  193: { name: 'Yanma', types: ['bug', 'flying'], generation: 2, legendary: false },
-  194: { name: 'Wooper', types: ['water', 'ground'], generation: 2, legendary: false },
-  195: { name: 'Quagsire', types: ['water', 'ground'], generation: 2, legendary: false },
-  196: { name: 'Espeon', types: ['psychic'], generation: 2, legendary: false },
-  197: { name: 'Umbreon', types: ['dark'], generation: 2, legendary: false },
-  198: { name: 'Murkrow', types: ['dark', 'flying'], generation: 2, legendary: false },
-  199: { name: 'Slowking', types: ['water', 'psychic'], generation: 2, legendary: false },
-  200: { name: 'Misdreavus', types: ['ghost'], generation: 2, legendary: false },
-  201: { name: 'Unown', types: ['psychic'], generation: 2, legendary: false },
-  202: { name: 'Wobbuffet', types: ['psychic'], generation: 2, legendary: false },
-  203: { name: 'Girafarig', types: ['normal', 'psychic'], generation: 2, legendary: false },
-  204: { name: 'Pineco', types: ['bug'], generation: 2, legendary: false },
-  205: { name: 'Forretress', types: ['bug', 'steel'], generation: 2, legendary: false },
-  206: { name: 'Dunsparce', types: ['normal'], generation: 2, legendary: false },
-  207: { name: 'Gligar', types: ['ground', 'flying'], generation: 2, legendary: false },
-  208: { name: 'Steelix', types: ['steel', 'ground'], generation: 2, legendary: false },
-  209: { name: 'Snubbull', types: ['fairy'], generation: 2, legendary: false },
-  210: { name: 'Granbull', types: ['fairy'], generation: 2, legendary: false },
-  211: { name: 'Qwilfish', types: ['water', 'poison'], generation: 2, legendary: false },
-  212: { name: 'Scizor', types: ['bug', 'steel'], generation: 2, legendary: false },
-  213: { name: 'Shuckle', types: ['bug', 'rock'], generation: 2, legendary: false },
-  214: { name: 'Heracross', types: ['bug', 'fighting'], generation: 2, legendary: false },
-  215: { name: 'Sneasel', types: ['dark', 'ice'], generation: 2, legendary: false },
-  216: { name: 'Teddiursa', types: ['normal'], generation: 2, legendary: false },
-  217: { name: 'Ursaring', types: ['normal'], generation: 2, legendary: false },
-  218: { name: 'Slugma', types: ['fire'], generation: 2, legendary: false },
-  219: { name: 'Magcargo', types: ['fire', 'rock'], generation: 2, legendary: false },
-  220: { name: 'Swinub', types: ['ice', 'ground'], generation: 2, legendary: false },
-  221: { name: 'Piloswine', types: ['ice', 'ground'], generation: 2, legendary: false },
-  222: { name: 'Corsola', types: ['water', 'rock'], generation: 2, legendary: false },
-  223: { name: 'Remoraid', types: ['water'], generation: 2, legendary: false },
-  224: { name: 'Octillery', types: ['water'], generation: 2, legendary: false },
-  225: { name: 'Delibird', types: ['ice', 'flying'], generation: 2, legendary: false },
-  226: { name: 'Mantine', types: ['water', 'flying'], generation: 2, legendary: false },
-  227: { name: 'Skarmory', types: ['steel', 'flying'], generation: 2, legendary: false },
-  228: { name: 'Houndour', types: ['dark', 'fire'], generation: 2, legendary: false },
-  229: { name: 'Houndoom', types: ['dark', 'fire'], generation: 2, legendary: false },
-  230: { name: 'Kingdra', types: ['water', 'dragon'], generation: 2, legendary: false },
-  231: { name: 'Phanpy', types: ['ground'], generation: 2, legendary: false },
-  232: { name: 'Donphan', types: ['ground'], generation: 2, legendary: false },
-  233: { name: 'Porygon2', types: ['normal'], generation: 2, legendary: false },
-  234: { name: 'Stantler', types: ['normal'], generation: 2, legendary: false },
-  235: { name: 'Smeargle', types: ['normal'], generation: 2, legendary: false },
-  236: { name: 'Tyrogue', types: ['fighting'], generation: 2, legendary: false },
-  237: { name: 'Hitmontop', types: ['fighting'], generation: 2, legendary: false },
-  238: { name: 'Smoochum', types: ['ice', 'psychic'], generation: 2, legendary: false },
-  239: { name: 'Elekid', types: ['electric'], generation: 2, legendary: false },
-  240: { name: 'Magby', types: ['fire'], generation: 2, legendary: false },
-  241: { name: 'Miltank', types: ['normal'], generation: 2, legendary: false },
-  242: { name: 'Blissey', types: ['normal'], generation: 2, legendary: false },
-  243: { name: 'Raikou', types: ['electric'], generation: 2, legendary: true },
-  244: { name: 'Entei', types: ['fire'], generation: 2, legendary: true },
-  245: { name: 'Suicune', types: ['water'], generation: 2, legendary: true },
-  246: { name: 'Larvitar', types: ['rock', 'ground'], generation: 2, legendary: false },
-  247: { name: 'Pupitar', types: ['rock', 'ground'], generation: 2, legendary: false },
-  248: { name: 'Tyranitar', types: ['rock', 'dark'], generation: 2, legendary: false },
-  249: { name: 'Lugia', types: ['psychic', 'flying'], generation: 2, legendary: true },
-  250: { name: 'Ho-Oh', types: ['fire', 'flying'], generation: 2, legendary: true },
-  251: { name: 'Celebi', types: ['psychic', 'grass'], generation: 2, legendary: true },
-
-  // Generación 3 - Hoenn (252-386)
-  252: { name: 'Treecko', types: ['grass'], generation: 3, legendary: false },
-  253: { name: 'Grovyle', types: ['grass'], generation: 3, legendary: false },
-  254: { name: 'Sceptile', types: ['grass'], generation: 3, legendary: false },
-  255: { name: 'Torchic', types: ['fire'], generation: 3, legendary: false },
-  256: { name: 'Combusken', types: ['fire', 'fighting'], generation: 3, legendary: false },
-  257: { name: 'Blaziken', types: ['fire', 'fighting'], generation: 3, legendary: false },
-  258: { name: 'Mudkip', types: ['water'], generation: 3, legendary: false },
-  259: { name: 'Marshtomp', types: ['water', 'ground'], generation: 3, legendary: false },
-  260: { name: 'Swampert', types: ['water', 'ground'], generation: 3, legendary: false },
-  261: { name: 'Poochyena', types: ['dark'], generation: 3, legendary: false },
-  262: { name: 'Mightyena', types: ['dark'], generation: 3, legendary: false },
-  263: { name: 'Zigzagoon', types: ['normal'], generation: 3, legendary: false },
-  264: { name: 'Linoone', types: ['normal'], generation: 3, legendary: false },
-  265: { name: 'Wurmple', types: ['bug'], generation: 3, legendary: false },
-  266: { name: 'Silcoon', types: ['bug'], generation: 3, legendary: false },
-  267: { name: 'Beautifly', types: ['bug', 'flying'], generation: 3, legendary: false },
-  268: { name: 'Cascoon', types: ['bug'], generation: 3, legendary: false },
-  269: { name: 'Dustox', types: ['bug', 'poison'], generation: 3, legendary: false },
   270: { name: 'Lotad', types: ['water', 'grass'], generation: 3, legendary: false },
   271: { name: 'Lombre', types: ['water', 'grass'], generation: 3, legendary: false },
   272: { name: 'Ludicolo', types: ['water', 'grass'], generation: 3, legendary: false },
@@ -1048,5 +901,316 @@ const POKEMON_DATA = {
   1024: { name: 'Terapagos', types: ['normal'], generation: 9, legendary: true },
   1025: { name: 'Pecharunt', types: ['poison', 'ghost'], generation: 9, legendary: true },
 };
+function Pokedex() {
+  const [pokemon, setPokemon] = useState([]);
+  const [filteredPokemon, setFilteredPokemon] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [caughtPokemon, setCaughtPokemon] = useState(new Set());
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedType, setSelectedType] = useState('all');
+  const [selectedGeneration, setSelectedGeneration] = useState('all');
+  const [loading, setLoading] = useState(true);
 
+  const POKEMON_PER_PAGE = 24;
 
+  // Cargar datos de Pokémon
+  useEffect(() => {
+    const loadPokemon = async () => {
+      try {
+        setLoading(true);
+        // Simular carga de datos
+        await new Promise(resolve => setTimeout(resolve, 500));
+        setPokemon(pokemonData);
+        setFilteredPokemon(pokemonData);
+      } catch (error) {
+        console.error('Error cargando Pokémon:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPokemon();
+  }, []);
+
+  // Filtrar Pokémon
+  useEffect(() => {
+    let filtered = pokemon;
+
+    // Filtrar por búsqueda
+    if (searchTerm) {
+      filtered = filtered.filter(p => 
+        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        p.id.toString().includes(searchTerm)
+      );
+    }
+
+    // Filtrar por tipo
+    if (selectedType !== 'all') {
+      filtered = filtered.filter(p => 
+        p.types.includes(selectedType)
+      );
+    }
+
+    // Filtrar por generación
+    if (selectedGeneration !== 'all') {
+      filtered = filtered.filter(p => 
+        p.generation.toString() === selectedGeneration
+      );
+    }
+
+    setFilteredPokemon(filtered);
+    setCurrentPage(1); // Resetear a primera página cuando se filtra
+  }, [searchTerm, selectedType, selectedGeneration, pokemon]);
+
+  // Obtener tipos únicos
+  const uniqueTypes = [...new Set(pokemon.flatMap(p => p.types))].sort();
+
+  // Obtener generaciones únicas
+  const uniqueGenerations = [...new Set(pokemon.map(p => p.generation))].sort((a, b) => a - b);
+
+  // Calcular paginación
+  const totalPages = Math.ceil(filteredPokemon.length / POKEMON_PER_PAGE);
+  const startIndex = (currentPage - 1) * POKEMON_PER_PAGE;
+  const endIndex = startIndex + POKEMON_PER_PAGE;
+  const currentPokemon = filteredPokemon.slice(startIndex, endIndex);
+
+  // Funciones de navegación
+  const goToPage = (page) => {
+    setCurrentPage(Math.max(1, Math.min(page, totalPages)));
+  };
+
+  const goToPrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Manejar selección de Pokémon
+  const handlePokemonClick = (pokemon, id) => {
+    setSelectedPokemon({ ...pokemon, id });
+  };
+
+  // Manejar captura/liberación
+  const handleToggleCaught = () => {
+    if (selectedPokemon) {
+      const newCaughtPokemon = new Set(caughtPokemon);
+      if (newCaughtPokemon.has(selectedPokemon.id)) {
+        newCaughtPokemon.delete(selectedPokemon.id);
+      } else {
+        newCaughtPokemon.add(selectedPokemon.id);
+      }
+      setCaughtPokemon(newCaughtPokemon);
+    }
+  };
+
+  // Generar números de página para navegación
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisible = 5;
+    
+    if (totalPages <= maxVisible) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1);
+        pages.push('...');
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        pages.push(1);
+        pages.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
+      }
+    }
+    
+    return pages;
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+        <div className="text-center text-white">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mb-4 mx-auto"></div>
+          <p className="text-lg font-bold">Cargando Pokédex...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+      <h2 className="text-3xl font-bold text-white mb-6 text-center">
+        📖 Pokédex Nacional
+      </h2>
+
+      {/* Filtros */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        {/* Búsqueda */}
+        <div>
+          <input
+            type="text"
+            placeholder="Buscar Pokémon..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-4 py-2 bg-white/90 text-gray-900 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Filtro por tipo */}
+        <div>
+          <select
+            value={selectedType}
+            onChange={(e) => setSelectedType(e.target.value)}
+            className="w-full px-4 py-2 bg-white/90 text-gray-900 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="all">Todos los tipos</option>
+            {uniqueTypes.map(type => (
+              <option key={type} value={type}>
+                {type.charAt(0).toUpperCase() + type.slice(1)}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Filtro por generación */}
+        <div>
+          <select
+            value={selectedGeneration}
+            onChange={(e) => setSelectedGeneration(e.target.value)}
+            className="w-full px-4 py-2 bg-white/90 text-gray-900 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="all">Todas las generaciones</option>
+            {uniqueGenerations.map(gen => (
+              <option key={gen} value={gen}>
+                Generación {gen}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Información de resultados */}
+      <div className="text-center text-white mb-6">
+        <p className="text-lg">
+          Mostrando {startIndex + 1}-{Math.min(endIndex, filteredPokemon.length)} de {filteredPokemon.length} Pokémon
+        </p>
+        <p className="text-sm text-white/80">
+          Página {currentPage} de {totalPages}
+        </p>
+      </div>
+
+      {/* Grid de Pokémon */}
+      {currentPokemon.length > 0 ? (
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+          {currentPokemon.map((p) => (
+            <PokemonCard
+              key={p.id}
+              pokemon={p}
+              id={p.id}
+              caught={caughtPokemon.has(p.id)}
+              onClick={handlePokemonClick}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center text-white py-12">
+          <div className="text-6xl mb-4">🔍</div>
+          <p className="text-xl">No se encontraron Pokémon</p>
+          <p className="text-gray-300">Intenta con otros filtros de búsqueda</p>
+        </div>
+      )}
+
+      {/* Controles de paginación */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center space-x-2 flex-wrap">
+          {/* Botón Primera página */}
+          <button
+            onClick={() => goToPage(1)}
+            disabled={currentPage === 1}
+            className="px-3 py-2 bg-white/20 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/30 transition-colors"
+          >
+            ««
+          </button>
+
+          {/* Botón Anterior */}
+          <button
+            onClick={goToPrevious}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-white/20 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/30 transition-colors"
+          >
+            « Anterior
+          </button>
+
+          {/* Números de página */}
+          {getPageNumbers().map((page, index) => (
+            <button
+              key={index}
+              onClick={() => typeof page === 'number' && goToPage(page)}
+              disabled={page === '...'}
+              className={`px-3 py-2 rounded-lg transition-colors ${
+                page === currentPage
+                  ? 'bg-blue-500 text-white'
+                  : page === '...'
+                  ? 'text-white cursor-default'
+                  : 'bg-white/20 text-white hover:bg-white/30'
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+
+          {/* Botón Siguiente */}
+          <button
+            onClick={goToNext}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-white/20 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/30 transition-colors"
+          >
+            Siguiente »
+          </button>
+
+          {/* Botón Última página */}
+          <button
+            onClick={() => goToPage(totalPages)}
+            disabled={currentPage === totalPages}
+            className="px-3 py-2 bg-white/20 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/30 transition-colors"
+          >
+            »»
+          </button>
+        </div>
+      )}
+
+      {/* Modal de Pokémon */}
+      {selectedPokemon && (
+        <PokemonModal
+          pokemon={selectedPokemon}
+          id={selectedPokemon.id}
+          caught={caughtPokemon.has(selectedPokemon.id)}
+          onClose={() => setSelectedPokemon(null)}
+          onToggleCaught={handleToggleCaught}
+        />
+      )}
+    </div>
+  );
+}
+
+export default Pokedex;

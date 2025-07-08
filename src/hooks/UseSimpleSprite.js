@@ -29,3 +29,5 @@ export function useSimpleSprite(pokemonId, large = false) {
 
   return sprite || '';
 }
+
+export default useSimpleSprite;

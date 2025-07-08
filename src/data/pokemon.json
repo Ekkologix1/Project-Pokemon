@@ -1,0 +1,938 @@
+[
+  {
+    "id": 1,
+    "name": "Bulbasaur",
+    "types": ["grass", "poison"],
+    "height": 7,
+    "weight": 69,
+    "generation": 1,
+    "description": "Un Pokémon cuadrúpedo de color verde con manchas más oscuras. Tiene un bulbo en el lomo que le permite realizar la fotosíntesis.",
+    "stats": {
+      "hp": 45,
+      "attack": 49,
+      "defense": 49,
+      "special_attack": 65,
+      "special_defense": 65,
+      "speed": 45
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+  },
+  {
+    "id": 2,
+    "name": "Ivysaur",
+    "types": ["grass", "poison"],
+    "height": 10,
+    "weight": 130,
+    "generation": 1,
+    "description": "La evolución de Bulbasaur. El bulbo en su lomo ha crecido y ahora tiene pétalos que comienzan a aparecer.",
+    "stats": {
+      "hp": 60,
+      "attack": 62,
+      "defense": 63,
+      "special_attack": 80,
+      "special_defense": 80,
+      "speed": 60
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png"
+  },
+  {
+    "id": 3,
+    "name": "Venusaur",
+    "types": ["grass", "poison"],
+    "height": 20,
+    "weight": 1000,
+    "generation": 1,
+    "description": "La evolución final de Bulbasaur. Tiene una gran flor en su lomo que libera un aroma dulce y relajante.",
+    "stats": {
+      "hp": 80,
+      "attack": 82,
+      "defense": 83,
+      "special_attack": 100,
+      "special_defense": 100,
+      "speed": 80
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
+  },
+  {
+    "id": 4,
+    "name": "Charmander",
+    "types": ["fire"],
+    "height": 6,
+    "weight": 85,
+    "generation": 1,
+    "description": "Un pequeño Pokémon bípedo similar a un lagarto. La llama en su cola indica su estado de salud y emociones.",
+    "stats": {
+      "hp": 39,
+      "attack": 52,
+      "defense": 43,
+      "special_attack": 60,
+      "special_defense": 50,
+      "speed": 65
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
+  },
+  {
+    "id": 5,
+    "name": "Charmeleon",
+    "types": ["fire"],
+    "height": 11,
+    "weight": 190,
+    "generation": 1,
+    "description": "La evolución de Charmander. Es más agresivo y la llama de su cola arde con más intensidad.",
+    "stats": {
+      "hp": 58,
+      "attack": 64,
+      "defense": 58,
+      "special_attack": 80,
+      "special_defense": 65,
+      "speed": 80
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png"
+  },
+  {
+    "id": 6,
+    "name": "Charizard",
+    "types": ["fire", "flying"],
+    "height": 17,
+    "weight": 905,
+    "generation": 1,
+    "description": "La evolución final de Charmander. Puede volar y escupe fuego tan caliente que puede derretir cualquier cosa.",
+    "stats": {
+      "hp": 78,
+      "attack": 84,
+      "defense": 78,
+      "special_attack": 109,
+      "special_defense": 85,
+      "speed": 100
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
+  },
+  {
+    "id": 7,
+    "name": "Squirtle",
+    "types": ["water"],
+    "height": 5,
+    "weight": 90,
+    "generation": 1,
+    "description": "Un pequeño Pokémon tortuga. Su caparazón se endurece después de nacer y se vuelve más resistente.",
+    "stats": {
+      "hp": 44,
+      "attack": 48,
+      "defense": 65,
+      "special_attack": 50,
+      "special_defense": 64,
+      "speed": 43
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
+  },
+  {
+    "id": 8,
+    "name": "Wartortle",
+    "types": ["water"],
+    "height": 10,
+    "weight": 225,
+    "generation": 1,
+    "description": "La evolución de Squirtle. Su cola está cubierta de pelo y se oscurece con la edad.",
+    "stats": {
+      "hp": 59,
+      "attack": 63,
+      "defense": 80,
+      "special_attack": 65,
+      "special_defense": 80,
+      "speed": 58
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png"
+  },
+  {
+    "id": 9,
+    "name": "Blastoise",
+    "types": ["water"],
+    "height": 16,
+    "weight": 855,
+    "generation": 1,
+    "description": "La evolución final de Squirtle. Los cañones de agua en su caparazón pueden perforar acero grueso.",
+    "stats": {
+      "hp": 79,
+      "attack": 83,
+      "defense": 100,
+      "special_attack": 85,
+      "special_defense": 105,
+      "speed": 78
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png"
+  },
+  {
+    "id": 25,
+    "name": "Pikachu",
+    "types": ["electric"],
+    "height": 4,
+    "weight": 60,
+    "generation": 1,
+    "description": "El Pokémon más famoso. Almacena electricidad en las bolsas de sus mejillas y la libera cuando se siente amenazado.",
+    "stats": {
+      "hp": 35,
+      "attack": 55,
+      "defense": 40,
+      "special_attack": 50,
+      "special_defense": 50,
+      "speed": 90
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+  },
+  {
+    "id": 26,
+    "name": "Raichu",
+    "types": ["electric"],
+    "height": 8,
+    "weight": 300,
+    "generation": 1,
+    "description": "La evolución de Pikachu. Puede descargar 100.000 voltios de electricidad.",
+    "stats": {
+      "hp": 60,
+      "attack": 90,
+      "defense": 55,
+      "special_attack": 90,
+      "special_defense": 80,
+      "speed": 110
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png"
+  },
+  {
+    "id": 150,
+    "name": "Mewtwo",
+    "types": ["psychic"],
+    "height": 20,
+    "weight": 1220,
+    "generation": 1,
+    "description": "Un Pokémon creado por ingeniería genética. Sus poderes psíquicos son extraordinarios.",
+    "stats": {
+      "hp": 106,
+      "attack": 110,
+      "defense": 90,
+      "special_attack": 154,
+      "special_defense": 90,
+      "speed": 130
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png"
+  },
+  {
+    "id": 151,
+    "name": "Mew",
+    "types": ["psychic"],
+    "height": 4,
+    "weight": 40,
+    "generation": 1,
+    "description": "Se dice que posee el ADN de todos los Pokémon. Puede hacerse invisible a voluntad.",
+    "stats": {
+      "hp": 100,
+      "attack": 100,
+      "defense": 100,
+      "special_attack": 100,
+      "special_defense": 100,
+      "speed": 100
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png"
+  },
+  {
+    "id": 152,
+    "name": "Chikorita",
+    "types": ["grass"],
+    "height": 9,
+    "weight": 64,
+    "generation": 2,
+    "description": "Le encanta tomar el sol. Usa la hoja de su cabeza para buscar lugares cálidos.",
+    "stats": {
+      "hp": 45,
+      "attack": 49,
+      "defense": 65,
+      "special_attack": 49,
+      "special_defense": 65,
+      "speed": 45
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/152.png"
+  },
+  {
+    "id": 155,
+    "name": "Cyndaquil",
+    "types": ["fire"],
+    "height": 5,
+    "weight": 79,
+    "generation": 2,
+    "description": "Es tímido y siempre se encoge formando una pelota. Cuando se asusta, las llamas de su lomo se avivan.",
+    "stats": {
+      "hp": 39,
+      "attack": 52,
+      "defense": 43,
+      "special_attack": 60,
+      "special_defense": 50,
+      "speed": 65
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/155.png"
+  },
+  {
+    "id": 158,
+    "name": "Totodile",
+    "types": ["water"],
+    "height": 6,
+    "weight": 95,
+    "generation": 2,
+    "description": "Tiene la mala costumbre de morder todo lo que se mueve. Si algo se mueve cerca suyo, seguro que lo muerde.",
+    "stats": {
+      "hp": 50,
+      "attack": 65,
+      "defense": 64,
+      "special_attack": 44,
+      "special_defense": 48,
+      "speed": 43
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/158.png"
+  },
+  {
+    "id": 249,
+    "name": "Lugia",
+    "types": ["psychic", "flying"],
+    "height": 52,
+    "weight": 2160,
+    "generation": 2,
+    "description": "Se dice que es el guardián de los mares. Se rumorea que apareció en una noche de tormenta.",
+    "stats": {
+      "hp": 106,
+      "attack": 90,
+      "defense": 130,
+      "special_attack": 90,
+      "special_defense": 154,
+      "speed": 110
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/249.png"
+  },
+  {
+    "id": 250,
+    "name": "Ho-Oh",
+    "types": ["fire", "flying"],
+    "height": 38,
+    "weight": 1990,
+    "generation": 2,
+    "description": "Se dice que vive al pie del arcoíris. Tiene el poder de resucitar a los Pokémon.",
+    "stats": {
+      "hp": 106,
+      "attack": 130,
+      "defense": 90,
+      "special_attack": 110,
+      "special_defense": 154,
+      "speed": 90
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/250.png"
+  },
+  {
+    "id": 252,
+    "name": "Treecko",
+    "types": ["grass"],
+    "height": 5,
+    "weight": 50,
+    "generation": 3,
+    "description": "Tiene ganchos pequeños en las plantas de los pies con los que puede caminar por las paredes.",
+    "stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 35,
+      "special_attack": 65,
+      "special_defense": 55,
+      "speed": 70
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/252.png"
+  },
+  {
+    "id": 255,
+    "name": "Torchic",
+    "types": ["fire"],
+    "height": 4,
+    "weight": 25,
+    "generation": 3,
+    "description": "En su interior tiene una llama que arde permanentemente. Se siente cálido al abrazarlo.",
+    "stats": {
+      "hp": 45,
+      "attack": 60,
+      "defense": 40,
+      "special_attack": 70,
+      "special_defense": 50,
+      "speed": 45
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/255.png"
+  },
+  {
+    "id": 258,
+    "name": "Mudkip",
+    "types": ["water"],
+    "height": 4,
+    "weight": 76,
+    "generation": 3,
+    "description": "La aleta de su cabeza es muy sensible. Puede detectar movimientos en el agua y en el aire.",
+    "stats": {
+      "hp": 50,
+      "attack": 70,
+      "defense": 50,
+      "special_attack": 50,
+      "special_defense": 50,
+      "speed": 40
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/258.png"
+  },
+  {
+    "id": 382,
+    "name": "Kyogre",
+    "types": ["water"],
+    "height": 45,
+    "weight": 3520,
+    "generation": 3,
+    "description": "Se dice que hizo crecer los océanos. Apareció tras una pelea con Groudon.",
+    "stats": {
+      "hp": 100,
+      "attack": 100,
+      "defense": 90,
+      "special_attack": 150,
+      "special_defense": 140,
+      "speed": 90
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/382.png"
+  },
+  {
+    "id": 383,
+    "name": "Groudon",
+    "types": ["ground"],
+    "height": 35,
+    "weight": 9500,
+    "generation": 3,
+    "description": "Se dice que hizo emerger las tierras. Apareció tras una pelea con Kyogre.",
+    "stats": {
+      "hp": 100,
+      "attack": 150,
+      "defense": 140,
+      "special_attack": 100,
+      "special_defense": 90,
+      "speed": 90
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/383.png"
+  },
+  {
+    "id": 384,
+    "name": "Rayquaza",
+    "types": ["dragon", "flying"],
+    "height": 70,
+    "weight": 2065,
+    "generation": 3,
+    "description": "Vive en la capa de ozono. Se dice que desciende a la tierra cuando Kyogre y Groudon pelean.",
+    "stats": {
+      "hp": 105,
+      "attack": 150,
+      "defense": 90,
+      "special_attack": 150,
+      "special_defense": 90,
+      "speed": 95
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/384.png"
+  },
+  {
+    "id": 393,
+    "name": "Piplup",
+    "types": ["water"],
+    "height": 4,
+    "weight": 52,
+    "generation": 4,
+    "description": "Vive en costas del norte. Nada muy bien y puede aguantar la respiración 10 minutos.",
+    "stats": {
+      "hp": 53,
+      "attack": 51,
+      "defense": 53,
+      "special_attack": 61,
+      "special_defense": 56,
+      "speed": 40
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/393.png"
+  },
+  {
+    "id": 448,
+    "name": "Lucario",
+    "types": ["fighting", "steel"],
+    "height": 12,
+    "weight": 540,
+    "generation": 4,
+    "description": "Puede leer los pensamientos y sentimientos de los demás. Predice los movimientos del enemigo captando su aura.",
+    "stats": {
+      "hp": 70,
+      "attack": 110,
+      "defense": 70,
+      "special_attack": 115,
+      "special_defense": 70,
+      "speed": 90
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/448.png"
+  },
+  {
+    "id": 483,
+    "name": "Dialga",
+    "types": ["steel", "dragon"],
+    "height": 54,
+    "weight": 6830,
+    "generation": 4,
+    "description": "Tiene el poder de controlar el tiempo. Aparece en los mitos de Sinnoh como una deidad.",
+    "stats": {
+      "hp": 100,
+      "attack": 120,
+      "defense": 120,
+      "special_attack": 150,
+      "special_defense": 100,
+      "speed": 90
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/483.png"
+  },
+  {
+    "id": 484,
+    "name": "Palkia",
+    "types": ["water", "dragon"],
+    "height": 42,
+    "weight": 3360,
+    "generation": 4,
+    "description": "Tiene la habilidad de distorsionar el espacio. Se dice que vive en una dimensión espacial paralela.",
+    "stats": {
+      "hp": 90,
+      "attack": 120,
+      "defense": 100,
+      "special_attack": 150,
+      "special_defense": 120,
+      "speed": 100
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/484.png"
+  },
+  {
+    "id": 493,
+    "name": "Arceus",
+    "types": ["normal"],
+    "height": 32,
+    "weight": 3200,
+    "generation": 4,
+    "description": "Se dice que emergió de un huevo en un lugar donde no había nada y que creó el mundo.",
+    "stats": {
+      "hp": 120,
+      "attack": 120,
+      "defense": 120,
+      "special_attack": 120,
+      "special_defense": 120,
+      "speed": 120
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/493.png"
+  },
+  {
+    "id": 495,
+    "name": "Snivy",
+    "types": ["grass"],
+    "height": 6,
+    "weight": 81,
+    "generation": 5,
+    "description": "Realiza la fotosíntesis con su cola. Si no tiene energía, su cola se inclina hacia abajo.",
+    "stats": {
+      "hp": 45,
+      "attack": 45,
+      "defense": 55,
+      "special_attack": 45,
+      "special_defense": 55,
+      "speed": 63
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/495.png"
+  },
+  {
+    "id": 498,
+    "name": "Tepig",
+    "types": ["fire"],
+    "height": 5,
+    "weight": 99,
+    "generation": 5,
+    "description": "Puede lanzar bolas de fuego desde su nariz. Le gusta asarse bayas y comérselas.",
+    "stats": {
+      "hp": 65,
+      "attack": 63,
+      "defense": 45,
+      "special_attack": 45,
+      "special_defense": 45,
+      "speed": 45
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/498.png"
+  },
+  {
+    "id": 501,
+    "name": "Oshawott",
+    "types": ["water"],
+    "height": 5,
+    "weight": 59,
+    "generation": 5,
+    "description": "La vieira de su vientre está hecha del mismo material que sus garras. Se desprende y vuelve a crecer.",
+    "stats": {
+      "hp": 55,
+      "attack": 55,
+      "defense": 45,
+      "special_attack": 63,
+      "special_defense": 45,
+      "speed": 45
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/501.png"
+  },
+  {
+    "id": 643,
+    "name": "Reshiram",
+    "types": ["dragon", "fire"],
+    "height": 32,
+    "weight": 3300,
+    "generation": 5,
+    "description": "Pokémon que ayuda a quienes quieren crear un mundo de verdad. Quema el mundo con su cola de fuego.",
+    "stats": {
+      "hp": 100,
+      "attack": 120,
+      "defense": 100,
+      "special_attack": 150,
+      "special_defense": 120,
+      "speed": 90
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/643.png"
+  },
+  {
+    "id": 644,
+    "name": "Zekrom",
+    "types": ["dragon", "electric"],
+    "height": 29,
+    "weight": 3450,
+    "generation": 5,
+    "description": "Pokémon que ayuda a quienes quieren crear un mundo de ideales. Genera electricidad con su cola.",
+    "stats": {
+      "hp": 100,
+      "attack": 150,
+      "defense": 120,
+      "special_attack": 120,
+      "special_defense": 100,
+      "speed": 90
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/644.png"
+  },
+  {
+    "id": 650,
+    "name": "Chespin",
+    "types": ["grass"],
+    "height": 4,
+    "weight": 90,
+    "generation": 6,
+    "description": "La púa de su cabeza es muy flexible. Puede atravesar rocas gruesas sin romperse.",
+    "stats": {
+      "hp": 56,
+      "attack": 61,
+      "defense": 65,
+      "special_attack": 48,
+      "special_defense": 45,
+      "speed": 38
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/650.png"
+  },
+  {
+    "id": 653,
+    "name": "Fennekin",
+    "types": ["fire"],
+    "height": 4,
+    "weight": 94,
+    "generation": 6,
+    "description": "Expulsa aire caliente de más de 200 grados por las orejas para intimidar a los enemigos.",
+    "stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 40,
+      "special_attack": 62,
+      "special_defense": 60,
+      "speed": 60
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/653.png"
+  },
+  {
+    "id": 656,
+    "name": "Froakie",
+    "types": ["water"],
+    "height": 3,
+    "weight": 70,
+    "generation": 6,
+    "description": "Segrega espuma flexible por el pecho y la espalda. Amortigua el daño que recibe en combate.",
+    "stats": {
+      "hp": 41,
+      "attack": 56,
+      "defense": 40,
+      "special_attack": 62,
+      "special_defense": 44,
+      "speed": 71
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/656.png"
+  },
+  {
+    "id": 722,
+    "name": "Rowlet",
+    "types": ["grass", "flying"],
+    "height": 3,
+    "weight": 15,
+    "generation": 7,
+    "description": "Ataca lanzando plumas afiladas. Se acerca sigilosamente a su presa y la ataca sin hacer ruido.",
+    "stats": {
+      "hp": 68,
+      "attack": 55,
+      "defense": 55,
+      "special_attack": 50,
+      "special_defense": 50,
+      "speed": 42
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/722.png"
+  },
+  {
+    "id": 725,
+    "name": "Litten",
+    "types": ["fire"],
+    "height": 4,
+    "weight": 43,
+    "generation": 7,
+    "description": "Mientras se acicala, acumula pelo dentro del estómago. Después lo prende y lo escupe como bolas de fuego.",
+    "stats": {
+      "hp": 45,
+      "attack": 65,
+      "defense": 40,
+      "special_attack": 60,
+      "special_defense": 40,
+      "speed": 70
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/725.png"
+  },
+  {
+    "id": 728,
+    "name": "Popplio",
+    "types": ["water"],
+    "height": 4,
+    "weight": 75,
+    "generation": 7,
+    "description": "Crea globos de agua por la nariz y los usa para atacar. Es muy trabajador y siempre entrena duro.",
+    "stats": {
+      "hp": 50,
+      "attack": 54,
+      "defense": 54,
+      "special_attack": 66,
+      "special_defense": 56,
+      "speed": 40
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/728.png"
+  },
+  {
+    "id": 791,
+    "name": "Solgaleo",
+    "types": ["psychic", "steel"],
+    "height": 34,
+    "weight": 2300,
+    "generation": 7,
+    "description": "Se dice que es el emisario del sol. Su cuerpo posee una luz que puede iluminar incluso la noche más oscura.",
+    "stats": {
+      "hp": 137,
+      "attack": 137,
+      "defense": 107,
+      "special_attack": 113,
+      "special_defense": 89,
+      "speed": 97
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/791.png"
+  },
+  {
+    "id": 792,
+    "name": "Lunala",
+    "types": ["psychic", "ghost"],
+    "height": 40,
+    "weight": 1200,
+    "generation": 7,
+    "description": "Se dice que es el emisario de la luna. Llama a la noche y hace que caiga en un sueño profundo.",
+    "stats": {
+      "hp": 137,
+      "attack": 113,
+      "defense": 89,
+      "special_attack": 137,
+      "special_defense": 107,
+      "speed": 97
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/792.png"
+  },
+  {
+    "id": 810,
+    "name": "Grookey",
+    "types": ["grass"],
+    "height": 3,
+    "weight": 50,
+    "generation": 8,
+    "description": "Cuando golpea algo con su palo, este se impregna de su energía. La hierba marchita revive al tocarla.",
+    "stats": {
+      "hp": 50,
+      "attack": 65,
+      "defense": 50,
+      "special_attack": 40,
+      "special_defense": 40,
+      "speed": 65
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/810.png"
+  },
+  {
+    "id": 813,
+    "name": "Scorbunny",
+    "types": ["fire"],
+    "height": 3,
+    "weight": 45,
+    "generation": 8,
+    "description": "Siempre está corriendo de aquí para allá. Cuanto más corre, más energía genera en su interior.",
+    "stats": {
+      "hp": 50,
+      "attack": 71,
+      "defense": 40,
+      "special_attack": 40,
+      "special_defense": 40,
+      "speed": 69
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/813.png"
+  },
+  {
+    "id": 816,
+    "name": "Sobble",
+    "types": ["water"],
+    "height": 3,
+    "weight": 40,
+    "generation": 8,
+    "description": "Cuando se pone nervioso, segrega agua de su cuerpo como si fuesen lágrimas. Es muy tímido.",
+    "stats": {
+      "hp": 50,
+      "attack": 40,
+      "defense": 40,
+      "special_attack": 70,
+      "special_defense": 40,
+      "speed": 70
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/816.png"
+  },
+  {
+    "id": 888,
+    "name": "Zacian",
+    "types": ["fairy"],
+    "height": 28,
+    "weight": 1100,
+    "generation": 8,
+    "description": "Sus movimientos son tan elegantes que fascinan a sus oponentes. Puede cortar cualquier cosa con su espada.",
+    "stats": {
+      "hp": 92,
+      "attack": 130,
+      "defense": 115,
+      "special_attack": 80,
+      "special_defense": 115,
+      "speed": 138
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/888.png"
+  },
+  {
+    "id": 889,
+    "name": "Zamazenta",
+    "types": ["fighting"],
+    "height": 29,
+    "weight": 2100,
+    "generation": 8,
+    "description": "Su cuerpo está cubierto de cicatrices de batallas para proteger a otros Pokémon. Duerme profundamente.",
+    "stats": {
+      "hp": 92,
+      "attack": 130,
+      "defense": 115,
+      "special_attack": 80,
+      "special_defense": 115,
+      "speed": 138
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/889.png"
+  },
+  {
+    "id": 906,
+    "name": "Sprigatito",
+    "types": ["grass"],
+    "height": 4,
+    "weight": 41,
+    "generation": 9,
+    "description": "Le gusta el sol y la fotosíntesis. Friega su cuerpo contra la gente para marcarla con su aroma.",
+    "stats": {
+      "hp": 40,
+      "attack": 61,
+      "defense": 54,
+      "special_attack": 45,
+      "special_defense": 45,
+      "speed": 65
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/906.png"
+  },
+  {
+    "id": 909,
+    "name": "Fuecoco",
+    "types": ["fire"],
+    "height": 4,
+    "weight": 98,
+    "generation": 9,
+    "description": "Se tumba al sol para absorber calor. Cuando come, el calor se acumula en su estómago y se convierte en energía de fuego.",
+    "stats": {
+      "hp": 67,
+      "attack": 45,
+      "defense": 59,
+      "special_attack": 63,
+      "special_defense": 40,
+      "speed": 36
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/909.png"
+  },
+  {
+    "id": 912,
+    "name": "Quaxly",
+    "types": ["water"],
+    "height": 5,
+    "weight": 61,
+    "generation": 9,
+    "description": "Su pelo siempre está perfectamente peinado. Cuando lucha, patea con sus patas palmeadas.",
+    "stats": {
+      "hp": 55,
+      "attack": 65,
+      "defense": 45,
+      "special_attack": 50,
+      "special_defense": 45,
+      "speed": 50
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/912.png"
+  },
+  {
+    "id": 1007,
+    "name": "Koraidon",
+    "types": ["fighting", "dragon"],
+    "height": 25,
+    "weight": 3030,
+    "generation": 9,
+    "description": "Este Pokémon tiene un orgullo desmesurado. Parece que el nombre Koraidon proviene de tiempos remotos.",
+    "stats": {
+      "hp": 100,
+      "attack": 135,
+      "defense": 115,
+      "special_attack": 85,
+      "special_defense": 100,
+      "speed": 135
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1007.png"
+  },
+  {
+    "id": 1008,
+    "name": "Miraidon",
+    "types": ["electric", "dragon"],
+    "height": 35,
+    "weight": 2400,
+    "generation": 9,
+    "description": "Se cree que este Pokémon es muy parecido a una máquina descrita en un libro de expediciones.",
+    "stats": {
+      "hp": 100,
+      "attack": 85,
+      "defense": 100,
+      "special_attack": 135,
+      "special_defense": 115,
+      "speed": 135
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1008.png"
+  }
+]

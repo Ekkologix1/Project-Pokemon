@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 
+
 export function usePokemonGame() {
   // Estado inicial con datos por defecto - inicializado inmediatamente
   const [playerData, setPlayerData] = useState({
@@ -371,3 +372,4 @@ export function usePokemonGame() {
     gameReady: gameInitialized
   }
 }
+export default usePokemonGame;

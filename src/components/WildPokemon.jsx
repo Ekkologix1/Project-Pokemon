@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSprite } from '../hooks/useSprite'
 
+
 const WildPokemon = ({ currentPokemon, onEncounter, isLoading, captureResult }) => {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
