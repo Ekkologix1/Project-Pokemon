@@ -235,19 +235,8 @@ function App() {
           )}
           
           {activeTab === 'pokedex' && (
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-                <h2 className="text-3xl font-bold text-white mb-6 text-center">
-                  📖 Pokédex
-                </h2>
-                <div className="text-center text-white">
-                  <div className="text-6xl mb-4">🔍</div>
-                  <p className="text-xl mb-4">Funcionalidad próximamente</p>
-                  <p className="text-gray-300">
-                    Aquí podrás ver información detallada de todos los Pokémon
-                  </p>
-                </div>
-              </div>
+            <div className="max-w-6xl mx-auto">
+              <Pokedex />
             </div>
           )}
           
