@@ -43,12 +43,58 @@ function App() {
     )
   }
 
+  // Iconos SVG temáticos de Pokémon
+  const PokemonIcons = {
+    hunt: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.8"/>
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2"/>
+        <path d="M2 12h20" stroke="currentColor" strokeWidth="2"/>
+        <circle cx="12" cy="12" r="3" fill="currentColor"/>
+      </svg>
+    ),
+    collection: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" opacity="0.6"/>
+        <path d="M2 4h20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" 
+              fill="none" stroke="currentColor" strokeWidth="2"/>
+        <circle cx="6" cy="8" r="1"/>
+        <circle cx="6" cy="12" r="1"/>
+        <circle cx="6" cy="16" r="1"/>
+      </svg>
+    ),
+    pokedex: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="2" y="3" width="20" height="18" rx="2" fill="currentColor" opacity="0.8"/>
+        <rect x="2" y="3" width="20" height="18" rx="2" fill="none" stroke="currentColor" strokeWidth="2"/>
+        <path d="M8 7h8M8 11h8M8 15h6" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+        <circle cx="18" cy="7" r="1" fill="red"/>
+      </svg>
+    ),
+    missions: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" 
+              fill="none" stroke="currentColor" strokeWidth="1"/>
+      </svg>
+    ),
+    storage: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" 
+              fill="currentColor" opacity="0.8"/>
+        <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" 
+              fill="none" stroke="currentColor" strokeWidth="2"/>
+        <path d="M8 9h8v6H8z" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+        <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+      </svg>
+    )
+  }
+
   const menuItems = [
-    { id: 'hunt', label: 'Caza Pokémon', icon: '🎯', color: 'from-red-500 to-orange-500' },
-    { id: 'collection', label: 'Colección', icon: '📚', color: 'from-green-500 to-teal-500' },
-    { id: 'pokedex', label: 'Pokédex', icon: '📖', color: 'from-blue-500 to-indigo-500' },
-    { id: 'missions', label: 'Misiones', icon: '🎯', color: 'from-purple-500 to-pink-500' },
-    { id: 'storage', label: 'Almacén', icon: '🏪', color: 'from-yellow-500 to-amber-500' }
+    { id: 'hunt', label: 'Caza Pokémon', icon: PokemonIcons.hunt, color: 'from-red-500 to-orange-500' },
+    { id: 'collection', label: 'Colección', icon: PokemonIcons.collection, color: 'from-green-500 to-teal-500' },
+    { id: 'pokedex', label: 'Pokédex', icon: PokemonIcons.pokedex, color: 'from-blue-500 to-indigo-500' },
+    { id: 'missions', label: 'Misiones', icon: PokemonIcons.missions, color: 'from-purple-500 to-pink-500' },
+    { id: 'storage', label: 'Almacén', icon: PokemonIcons.storage, color: 'from-yellow-500 to-amber-500' }
   ]
 
   const PokeBallButton = ({ onClick, disabled, capturing }) => (
@@ -110,7 +156,7 @@ function App() {
                 }
               `}
             >
-              <span className="text-xl">{item.icon}</span>
+              <span className="text-xl flex items-center justify-center">{item.icon}</span>
               <span className="font-medium">{item.label}</span>
             </button>
           ))}
@@ -131,7 +177,7 @@ function App() {
               ${activeTab === item.id ? 'text-white bg-white/20' : 'text-white/70'}
             `}
           >
-            <span className="text-lg">{item.icon}</span>
+            <span className="text-lg flex items-center justify-center">{item.icon}</span>
             <span className="text-xs font-medium">{item.label}</span>
           </button>
         ))}
@@ -169,8 +215,21 @@ function App() {
             </button>
             
             <div className="text-center">
-              <h1 className="text-3xl md:text-5xl font-bold text-white mb-2 drop-shadow-lg">
-                🎮 Pokémon Hunter
+              <h1 className="text-3xl md:text-5xl font-bold text-white mb-2 drop-shadow-lg flex items-center justify-center gap-3">
+                <svg className="w-8 h-8 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" fill="url(#pokeball-gradient)" stroke="white" strokeWidth="2"/>
+                  <path d="M2 12h20" stroke="white" strokeWidth="2"/>
+                  <circle cx="12" cy="12" r="3" fill="white" stroke="#333" strokeWidth="1"/>
+                  <defs>
+                    <linearGradient id="pokeball-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#ff6b6b"/>
+                      <stop offset="50%" stopColor="#ff5252"/>
+                      <stop offset="50%" stopColor="#f5f5f5"/>
+                      <stop offset="100%" stopColor="#e0e0e0"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                Pokémon Hunter
               </h1>
               <p className="text-lg text-white/90 drop-shadow hidden md:block">
                 ¡Explora y captura Pokémon salvajes!
@@ -270,4 +329,6 @@ function App() {
   )
 }
 
-export default App
+export default App14 2 9.27l6.91-1.01L12 2z" 
+              fill="currentColor" opacity="0.9"/>
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.
