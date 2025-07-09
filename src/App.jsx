@@ -46,45 +46,63 @@ function App() {
   // Iconos SVG temáticos de Pokémon
   const PokemonIcons = {
     hunt: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-        <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.8"/>
-        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2"/>
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+        <defs>
+          <linearGradient id="pokeball-hunt" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ff6b6b"/>
+            <stop offset="50%" stopColor="#ff5252"/>
+            <stop offset="50%" stopColor="#f5f5f5"/>
+            <stop offset="100%" stopColor="#e0e0e0"/>
+          </linearGradient>
+        </defs>
+        <circle cx="12" cy="12" r="10" fill="url(#pokeball-hunt)" stroke="currentColor" strokeWidth="2"/>
         <path d="M2 12h20" stroke="currentColor" strokeWidth="2"/>
         <circle cx="12" cy="12" r="3" fill="currentColor"/>
+        <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" strokeWidth="1" opacity="0.5"/>
       </svg>
     ),
     collection: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" opacity="0.6"/>
-        <path d="M2 4h20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" 
-              fill="none" stroke="currentColor" strokeWidth="2"/>
-        <circle cx="6" cy="8" r="1"/>
-        <circle cx="6" cy="12" r="1"/>
-        <circle cx="6" cy="16" r="1"/>
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="4" width="18" height="16" rx="2" fill="currentColor" opacity="0.2"/>
+        <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="2"/>
+        <path d="M7 8h10M7 12h10M7 16h7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <circle cx="17" cy="16" r="2" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+        <circle cx="17" cy="16" r="1" fill="currentColor"/>
+        <path d="M15 14l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
       </svg>
     ),
     pokedex: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-        <rect x="2" y="3" width="20" height="18" rx="2" fill="currentColor" opacity="0.8"/>
-        <rect x="2" y="3" width="20" height="18" rx="2" fill="none" stroke="currentColor" strokeWidth="2"/>
-        <path d="M8 7h8M8 11h8M8 15h6" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-        <circle cx="18" cy="7" r="1" fill="red"/>
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+        <rect x="2" y="3" width="20" height="18" rx="2" fill="currentColor" opacity="0.2"/>
+        <rect x="2" y="3" width="20" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
+        <rect x="5" y="7" width="6" height="4" rx="1" fill="currentColor" opacity="0.4"/>
+        <circle cx="8" cy="9" r="1" fill="currentColor"/>
+        <path d="M14 8h5M14 11h5M14 14h4M14 17h3" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+        <circle cx="18" cy="6" r="1" fill="#ef4444"/>
+        <circle cx="20" cy="6" r="0.5" fill="#22c55e"/>
+        <path d="M5 15h6" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+        <path d="M5 17h4" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
       </svg>
     ),
     missions: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" 
-              fill="none" stroke="currentColor" strokeWidth="1"/>
+              fill="currentColor" opacity="0.8"/>
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" 
+              stroke="currentColor" strokeWidth="1.5" fill="none"/>
+        <circle cx="12" cy="12" r="2" fill="currentColor"/>
+        <path d="M12 8v8M8 12h8" stroke="currentColor" strokeWidth="1" opacity="0.6"/>
       </svg>
     ),
     storage: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" 
-              fill="currentColor" opacity="0.8"/>
-        <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" 
-              fill="none" stroke="currentColor" strokeWidth="2"/>
-        <path d="M8 9h8v6H8z" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="7" width="18" height="10" rx="2" fill="currentColor" opacity="0.2"/>
+        <rect x="3" y="7" width="18" height="10" rx="2" stroke="currentColor" strokeWidth="2"/>
+        <rect x="7" y="10" width="10" height="4" rx="1" fill="currentColor" opacity="0.4"/>
         <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+        <path d="M12 5v2M8 5v2M16 5v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M6 17v2M12 17v2M18 17v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <rect x="9" y="11" width="6" height="2" rx="0.5" fill="currentColor" opacity="0.6"/>
       </svg>
     )
   }
@@ -329,6 +347,4 @@ function App() {
   )
 }
 
-export default App14 2 9.27l6.91-1.01L12 2z" 
-              fill="currentColor" opacity="0.9"/>
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.
+export default App
