@@ -7,6 +7,7 @@ import Missions from './components/Missions'
 import Notification from './components/Notification'
 import Pokedex from './components/Pokedex'
 import { usePokemonGame } from './hooks/usePokemonGame'
+import Storage from './components/Storage'
 
 function App() {
   const {
@@ -246,24 +247,15 @@ function App() {
             </div>
           )}
           
-          {activeTab === 'storage' && (
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-                <h2 className="text-3xl font-bold text-white mb-6 text-center">
-                  🏪 Almacén
-                </h2>
-                <div className="text-center text-white">
-                  <div className="text-6xl mb-4">📦</div>
-                  <p className="text-xl mb-4">Almacén en construcción</p>
-                  <p className="text-gray-300">
-                    Próximamente podrás gestionar tus objetos y pokéballs
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
+{activeTab === 'storage' && (
+  <div className="max-w-6xl mx-auto">
+    <Storage 
+      playerData={playerData} 
+      onPurchaseItem={purchaseItem}
+      onUseItem={useItem}
+    />
+  </div>
+)}
         {/* Mobile Tab Bar */}
         <MobileTabBar />
       </div>
