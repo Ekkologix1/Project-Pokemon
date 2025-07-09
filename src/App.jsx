@@ -20,7 +20,9 @@ function App() {
     isLoading,
     isCapturing,
     captureResult,
-    gameReady
+    gameReady,
+    purchaseItem,
+    useItem
   } = usePokemonGame()
 
   const [activeTab, setActiveTab] = useState('hunt')
@@ -247,15 +249,17 @@ function App() {
             </div>
           )}
           
-{activeTab === 'storage' && (
-  <div className="max-w-6xl mx-auto">
-    <Storage 
-      playerData={playerData} 
-      onPurchaseItem={purchaseItem}
-      onUseItem={useItem}
-    />
-  </div>
-)}
+          {activeTab === 'storage' && (
+            <div className="max-w-6xl mx-auto">
+              <Storage 
+                playerData={playerData} 
+                onPurchaseItem={purchaseItem}
+                onUseItem={useItem}
+              />
+            </div>
+          )}
+        </div>
+
         {/* Mobile Tab Bar */}
         <MobileTabBar />
       </div>
