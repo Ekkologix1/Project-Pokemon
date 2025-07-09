@@ -1,17 +1,35 @@
-// hooks/usePokemonGame.js - Fragmento con las mejoras necesarias
+import { useState, useEffect, useCallback } from 'react'
 
-// Añadir al estado inicial del juego
+// Estado inicial del juego
 const initialGameState = {
   playerData: {
-    // ... otros datos existentes
-    coins: 100, // Añadir monedas iniciales
+    name: 'Entrenador',
+    level: 1,
+    experience: 0,
+    collection: [],
+    totalCaptured: 0,
+    totalEncounters: 0,
+    coins: 100,
     completedMissions: [],
-    missionProgress: {} // Para trackear progreso específico
+    missionProgress: {},
+    dailyCatches: {},
+    consecutiveCatches: 0,
+    inventory: {
+      pokeball: 10,
+      greatball: 2,
+      ultraball: 1,
+      potion: 3,
+      superpotion: 1
+    }
   },
-  // ... resto del estado
+  currentPokemon: null,
+  missions: [],
+  isLoading: false,
+  isCapturing: false,
+  captureResult: null,
+  notification: null,
+  gameReady: false
 }
-
-// Añadir estas funciones al hook usePokemonGame
 
 // Función para generar nuevas misiones
 const generateNewMissions = (completedMissionIds = []) => {
@@ -48,129 +66,175 @@ const generateNewMissions = (completedMissionIds = []) => {
   return activeMissions
 }
 
-// Función para completar misión
-const completeMission = useCallback((missionId) => {
-  const mission = missions.find(m => m.id === missionId)
-  if (!mission) return
+export const usePokemonGame = () => {
+  const [gameState, setGameState] = useState(initialGameState)
 
-  setGameState(prevState => {
-    const newCompletedMissions = [...prevState.playerData.completedMissions, missionId]
-    const newPlayerData = {
-      ...prevState.playerData,
-      experience: prevState.playerData.experience + mission.reward.exp,
-      coins: prevState.playerData.coins + mission.reward.coins,
-      completedMissions: newCompletedMissions
-    }
-
-    // Calcular nuevo nivel
-    const newLevel = Math.floor(newPlayerData.experience / 100) + 1
-    newPlayerData.level = newLevel
-
-    // Generar nuevas misiones
-    const newMissions = generateNewMissions(newCompletedMissions)
-
-    // Mostrar notificación
-    showNotification(
-      `🎉 ¡Misión completada! +${mission.reward.exp} EXP, +${mission.reward.coins} monedas`,
-      'success'
-    )
-
-    return {
-      ...prevState,
-      playerData: newPlayerData,
-      missions: newMissions
-    }
-  })
-}, [missions, showNotification])
-
-// Función mejorada para calcular progreso
-const calculateMissionProgress = useCallback((mission, playerData) => {
-  let progress = 0
-  
-  switch (mission.type) {
-    case 'catch':
-      progress = playerData.collection.reduce((unique, pokemon) => {
-        if (!unique.some(p => p.id === pokemon.id)) {
-          unique.push(pokemon)
-        }
-        return unique
-      }, []).length
-      break
-      
-    case 'encounter':
-      progress = playerData.totalEncounters
-      break
-      
-    case 'level':
-      progress = playerData.level
-      break
-      
-    case 'catch_type':
-      progress = playerData.collection.filter(pokemon => 
-        pokemon.types && pokemon.types.some(type => 
-          type.type.name.toLowerCase() === mission.subtype
-        )
-      ).length
-      break
-      
-    case 'catch_rarity':
-      // Pokémon legendarios tienen stats base muy altas
-      progress = playerData.collection.filter(pokemon => 
-        pokemon.base_experience > 250
-      ).length
-      break
-      
-    case 'daily_catch':
-      // Necesitarías implementar tracking de capturas diarias
-      const today = new Date().toDateString()
-      progress = playerData.dailyCatches?.[today] || 0
-      break
-      
-    case 'perfect_catch':
-      progress = playerData.consecutiveCatches || 0
-      break
-      
-    default:
-      progress = 0
-  }
-  
-  return Math.min(progress, mission.target)
-}, [])
-
-// Función para verificar misiones completadas
-const checkMissionCompletion = useCallback(() => {
-  missions.forEach(mission => {
-    if (!playerData.completedMissions.includes(mission.id)) {
-      const progress = calculateMissionProgress(mission, playerData)
-      if (progress >= mission.target) {
-        completeMission(mission.id)
-      }
-    }
-  })
-}, [missions, playerData, calculateMissionProgress, completeMission])
-
-// Llamar a checkMissionCompletion cuando cambie el playerData
-useEffect(() => {
-  if (gameReady) {
-    checkMissionCompletion()
-  }
-}, [playerData, checkMissionCompletion, gameReady])
-
-// Inicializar misiones al cargar el juego
-useEffect(() => {
-  if (gameReady && missions.length === 0) {
-    const initialMissions = generateNewMissions()
-    setGameState(prevState => ({
-      ...prevState,
-      missions: initialMissions
+  // Función para mostrar notificaciones
+  const showNotification = useCallback((message, type = 'info') => {
+    setGameState(prev => ({
+      ...prev,
+      notification: { message, type }
     }))
-  }
-}, [gameReady, missions.length])
+    
+    setTimeout(() => {
+      setGameState(prev => ({
+        ...prev,
+        notification: null
+      }))
+    }, 3000)
+  }, [])
 
-// Retornar las funciones necesarias del hook
-return {
-  // ... otras funciones existentes
-  calculateMissionProgress,
-  completeMission,
-  // ... resto de returns
-}
+  // Función para cargar datos del localStorage
+  const loadGameData = useCallback(() => {
+    try {
+      const savedData = localStorage.getItem('pokemonGameData')
+      if (savedData) {
+        const parsedData = JSON.parse(savedData)
+        setGameState(prev => ({
+          ...prev,
+          playerData: {
+            ...prev.playerData,
+            ...parsedData
+          }
+        }))
+      }
+    } catch (error) {
+      console.error('Error loading game data:', error)
+    }
+  }, [])
+
+  // Función para guardar datos en localStorage
+  const saveGameData = useCallback((playerData) => {
+    try {
+      localStorage.setItem('pokemonGameData', JSON.stringify(playerData))
+    } catch (error) {
+      console.error('Error saving game data:', error)
+    }
+  }, [])
+
+  // Función para obtener un Pokémon aleatorio
+  const fetchRandomPokemon = useCallback(async () => {
+    try {
+      const randomId = Math.floor(Math.random() * 1010) + 1
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`)
+      const data = await response.json()
+      
+      // Añadir timestamp para tracking
+      data.encounteredAt = new Date().getTime()
+      
+      return data
+    } catch (error) {
+      console.error('Error fetching Pokemon:', error)
+      return null
+    }
+  }, [])
+
+  // Función para encontrar Pokémon salvaje
+  const encounterWildPokemon = useCallback(async () => {
+    setGameState(prev => ({
+      ...prev,
+      isLoading: true,
+      captureResult: null
+    }))
+
+    const pokemon = await fetchRandomPokemon()
+    
+    if (pokemon) {
+      setGameState(prev => ({
+        ...prev,
+        currentPokemon: pokemon,
+        isLoading: false,
+        playerData: {
+          ...prev.playerData,
+          totalEncounters: prev.playerData.totalEncounters + 1
+        }
+      }))
+    } else {
+      setGameState(prev => ({
+        ...prev,
+        isLoading: false
+      }))
+      showNotification('Error al encontrar Pokémon', 'error')
+    }
+  }, [fetchRandomPokemon, showNotification])
+
+  // Función para intentar capturar Pokémon
+  const attemptCapture = useCallback(async () => {
+    if (!gameState.currentPokemon) return
+
+    setGameState(prev => ({
+      ...prev,
+      isCapturing: true
+    }))
+
+    // Simular captura con probabilidad
+    const baseSuccessRate = 0.6
+    const levelBonus = gameState.playerData.level * 0.05
+    const successRate = Math.min(baseSuccessRate + levelBonus, 0.9)
+    
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    
+    const success = Math.random() < successRate
+    
+    if (success) {
+      const capturedPokemon = {
+        ...gameState.currentPokemon,
+        capturedAt: new Date().getTime(),
+        captureLevel: gameState.playerData.level
+      }
+
+      const today = new Date().toDateString()
+      
+      setGameState(prev => {
+        const newPlayerData = {
+          ...prev.playerData,
+          collection: [...prev.playerData.collection, capturedPokemon],
+          totalCaptured: prev.playerData.totalCaptured + 1,
+          experience: prev.playerData.experience + 10,
+          dailyCatches: {
+            ...prev.playerData.dailyCatches,
+            [today]: (prev.playerData.dailyCatches[today] || 0) + 1
+          },
+          consecutiveCatches: prev.playerData.consecutiveCatches + 1
+        }
+        
+        // Calcular nuevo nivel
+        const newLevel = Math.floor(newPlayerData.experience / 100) + 1
+        if (newLevel > newPlayerData.level) {
+          newPlayerData.level = newLevel
+          showNotification(`¡Nivel ${newLevel} alcanzado!`, 'success')
+        }
+        
+        return {
+          ...prev,
+          playerData: newPlayerData,
+          isCapturing: false,
+          captureResult: { success: true, pokemon: capturedPokemon },
+          currentPokemon: null
+        }
+      })
+      
+      showNotification(`¡${gameState.currentPokemon.name} capturado!`, 'success')
+    } else {
+      setGameState(prev => ({
+        ...prev,
+        isCapturing: false,
+        captureResult: { success: false, pokemon: prev.currentPokemon },
+        playerData: {
+          ...prev.playerData,
+          consecutiveCatches: 0 // Resetear capturas consecutivas
+        }
+      }))
+      
+      showNotification('¡El Pokémon se escapó!', 'error')
+    }
+  }, [gameState.currentPokemon, gameState.playerData, showNotification])
+
+  // Función para completar misión
+  const completeMission = useCallback((missionId) => {
+    const mission = gameState.missions.find(m => m.id === missionId)
+    if (!mission) return
+
+    setGameState(prevState => {
+      const newCompletedMissions = [...prevState.playerData.completedMissions, missionId]
+      const
