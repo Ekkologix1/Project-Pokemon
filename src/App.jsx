@@ -22,8 +22,7 @@ function App() {
     captureResult,
     gameReady,
     purchaseItem,
-    useItem,
-    calculateMissionProgress // Importar desde el hook
+    useItem
   } = usePokemonGame()
 
   const [activeTab, setActiveTab] = useState('hunt')
@@ -323,14 +322,10 @@ function App() {
           
           {activeTab === 'missions' && (
             <div className="max-w-4xl mx-auto">
-              <Missions 
-                missions={missions} 
-                playerData={playerData} 
-                calculateMissionProgress={calculateMissionProgress}
-              />
+              <Missions missions={missions} playerData={playerData} />
             </div>
           )}
-
+          
           {activeTab === 'storage' && (
             <div className="max-w-6xl mx-auto">
               <Storage 
