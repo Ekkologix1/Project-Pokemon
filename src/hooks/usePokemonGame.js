@@ -1,375 +1,176 @@
-import { useState, useEffect, useCallback } from 'react'
+// hooks/usePokemonGame.js - Fragmento con las mejoras necesarias
 
-
-export function usePokemonGame() {
-  // Estado inicial con datos por defecto - inicializado inmediatamente
-  const [playerData, setPlayerData] = useState({
-    level: 1,
-    exp: 0,
-    pokemonCaught: 0,
-    totalEncounters: 0,
-    collection: [],
-    completedMissions: []
-  })
-  
-  const [currentPokemon, setCurrentPokemon] = useState(null)
-  const [missions, setMissions] = useState([])
-  const [notification, setNotification] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isCapturing, setIsCapturing] = useState(false)
-  const [captureResult, setCaptureResult] = useState(null)
-  const [gameInitialized, setGameInitialized] = useState(false)
-
-  const API_URL = 'https://pokeapi.co/api/v2/pokemon/'
-  const MAX_POKEMON_ID = 1010
-
-  // Mostrar notificación
-  const showNotification = useCallback((message, type = 'success') => {
-    console.log(`[NOTIFICATION] ${type}: ${message}`)
-    setNotification({ message, type })
-    setTimeout(() => setNotification(null), 3000)
-  }, [])
-
-  // Añadir experiencia
-  const addExp = useCallback((amount) => {
-    console.log(`[EXP] Añadiendo ${amount} experiencia`)
-    setPlayerData(currentData => {
-      const newExp = currentData.exp + amount
-      const expForNextLevel = currentData.level * 100
-      
-      if (newExp >= expForNextLevel) {
-        const newLevel = currentData.level + 1
-        showNotification(`¡Subiste al nivel ${newLevel}!`, 'success')
-        return { ...currentData, level: newLevel, exp: 0 }
-      }
-      
-      return { ...currentData, exp: newExp }
-    })
-  }, [showNotification])
-
-  // Verificar y actualizar misiones
-  const checkMissions = useCallback((data) => {
-    console.log('[MISSIONS] Verificando misiones con datos:', data)
-    setMissions(currentMissions => {
-      return currentMissions.map(mission => {
-        if (data.completedMissions.includes(mission.id)) {
-          return { ...mission, progress: mission.target }
-        }
-        
-        let progress = 0
-        switch (mission.type) {
-          case 'catch':
-            progress = data.collection.reduce((unique, pokemon) => {
-              if (!unique.some(p => p.id === pokemon.id)) {
-                unique.push(pokemon)
-              }
-              return unique
-            }, []).length
-            break
-          case 'encounter':
-            progress = data.totalEncounters
-            break
-          case 'level':
-            progress = data.level
-            break
-          default:
-            progress = 0
-        }
-        
-        // Completar misión si alcanzó el objetivo
-        if (progress >= mission.target && !data.completedMissions.includes(mission.id)) {
-          console.log(`[MISSIONS] Completando misión: ${mission.title}`)
-          setTimeout(() => {
-            setPlayerData(prevData => {
-              const newData = {
-                ...prevData,
-                completedMissions: [...prevData.completedMissions, mission.id]
-              }
-              addExp(mission.reward)
-              showNotification(`¡Misión completada: ${mission.title}! +${mission.reward} EXP`, 'success')
-              return newData
-            })
-          }, 100)
-        }
-        
-        return { ...mission, progress }
-      })
-    })
-  }, [addExp, showNotification])
-
-  // Crear un Pokémon de emergencia
-  const createFallbackPokemon = useCallback((id = 25) => {
-    const fallbackPokemons = {
-      25: {
-        id: 25,
-        name: 'pikachu',
-        image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
-        types: ['electric'],
-        height: 4,
-        weight: 60,
-        stats: [
-          { name: 'hp', value: 35 },
-          { name: 'attack', value: 55 },
-          { name: 'defense', value: 40 },
-          { name: 'special-attack', value: 50 },
-          { name: 'special-defense', value: 50 },
-          { name: 'speed', value: 90 }
-        ]
-      },
-      1: {
-        id: 1,
-        name: 'bulbasaur',
-        image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
-        types: ['grass', 'poison'],
-        height: 7,
-        weight: 69,
-        stats: [
-          { name: 'hp', value: 45 },
-          { name: 'attack', value: 49 },
-          { name: 'defense', value: 49 },
-          { name: 'special-attack', value: 65 },
-          { name: 'special-defense', value: 65 },
-          { name: 'speed', value: 45 }
-        ]
-      }
-    }
-    
-    return fallbackPokemons[id] || fallbackPokemons[25]
-  }, [])
-
-  // Encontrar Pokémon salvaje
-  const encounterWildPokemon = useCallback(async () => {
-    console.log('[POKEMON] Iniciando búsqueda de Pokémon salvaje...')
-    setIsLoading(true)
-    setCaptureResult(null)
-    
-    try {
-      // Usar rango más pequeño para mayor confiabilidad
-      const randomId = Math.floor(Math.random() * 151) + 1
-      console.log('[POKEMON] Buscando Pokémon con ID:', randomId)
-      
-      const response = await fetch(`${API_URL}${randomId}`)
-      console.log('[POKEMON] Respuesta de API:', response.status)
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      
-      const pokemon = await response.json()
-      console.log('[POKEMON] Pokémon encontrado:', pokemon.name, '#' + pokemon.id)
-      
-      const pokemonData = {
-        id: pokemon.id,
-        name: pokemon.name,
-        image: pokemon.sprites.other?.['official-artwork']?.front_default || 
-               pokemon.sprites.other?.['dream_world']?.front_default ||
-               pokemon.sprites.front_default ||
-               `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`,
-        types: pokemon.types.map(type => type.type.name),
-        height: pokemon.height,
-        weight: pokemon.weight,
-        stats: pokemon.stats.map(stat => ({
-          name: stat.stat.name,
-          value: stat.base_stat
-        }))
-      }
-      
-      console.log('[POKEMON] Datos del Pokémon procesados:', pokemonData)
-      setCurrentPokemon(pokemonData)
-      
-      // Actualizar encuentros
-      setPlayerData(currentData => {
-        const newData = {
-          ...currentData,
-          totalEncounters: currentData.totalEncounters + 1
-        }
-        
-        console.log('[POKEMON] Actualizando encuentros:', newData.totalEncounters)
-        setTimeout(() => checkMissions(newData), 100)
-        return newData
-      })
-      
-    } catch (error) {
-      console.error('[POKEMON] Error fetching Pokemon:', error)
-      showNotification('Conexión lenta, usando Pokémon local...', 'info')
-      
-      // Usar Pokémon de emergencia inmediatamente
-      const fallbackId = Math.floor(Math.random() * 2) === 0 ? 25 : 1
-      const fallbackPokemon = createFallbackPokemon(fallbackId)
-      
-      console.log('[POKEMON] Usando Pokémon de emergencia:', fallbackPokemon.name)
-      setCurrentPokemon(fallbackPokemon)
-      
-      setPlayerData(currentData => {
-        const newData = {
-          ...currentData,
-          totalEncounters: currentData.totalEncounters + 1
-        }
-        setTimeout(() => checkMissions(newData), 100)
-        return newData
-      })
-    } finally {
-      setIsLoading(false)
-    }
-  }, [showNotification, checkMissions, createFallbackPokemon])
-
-  // Intentar capturar Pokémon
-  const attemptCapture = useCallback(async () => {
-    if (!currentPokemon || isCapturing) {
-      console.log('[CAPTURE] No se puede capturar - Pokémon:', !!currentPokemon, 'Capturando:', isCapturing)
-      return
-    }
-
-    console.log('[CAPTURE] Iniciando captura de:', currentPokemon.name)
-    setIsCapturing(true)
-    setCaptureResult(null)
-
-    // Simular animación de captura
-    setTimeout(() => {
-      // Calcular probabilidad de éxito
-      const baseRate = 0.7
-      const levelBonus = Math.min(playerData.level * 0.02, 0.2)
-      const rarityPenalty = currentPokemon.id > 600 ? 0.1 : 0
-      const captureRate = Math.min(baseRate + levelBonus - rarityPenalty, 0.95)
-      
-      const success = Math.random() < captureRate
-      console.log('[CAPTURE] Probabilidad:', captureRate, 'Éxito:', success)
-      
-      if (success) {
-        setCaptureResult('success')
-        
-        setPlayerData(currentData => {
-          const alreadyCaught = currentData.collection.some(p => p.id === currentPokemon.id)
-          
-          const newCollection = alreadyCaught 
-            ? currentData.collection
-            : [...currentData.collection, { 
-                ...currentPokemon, 
-                caughtAt: new Date().toISOString() 
-              }]
-          
-          const newData = {
-            ...currentData,
-            pokemonCaught: currentData.pokemonCaught + 1,
-            collection: newCollection
-          }
-          
-          console.log('[CAPTURE] Pokémon capturado. Nueva colección:', newData.collection.length)
-          
-          // Añadir experiencia
-          const expAmount = alreadyCaught ? 10 : 25
-          setTimeout(() => addExp(expAmount), 500)
-          setTimeout(() => checkMissions(newData), 100)
-          
-          return newData
-        })
-        
-        showNotification('¡Pokémon capturado con éxito!', 'success')
-        
-        // Buscar nuevo Pokémon después de un momento
-        setTimeout(() => {
-          console.log('[CAPTURE] Buscando nuevo Pokémon...')
-          encounterWildPokemon()
-        }, 2000)
-      } else {
-        setCaptureResult('failed')
-        showNotification('¡El Pokémon escapó! Intenta de nuevo.', 'error')
-      }
-      
-      setIsCapturing(false)
-    }, 1500)
-  }, [currentPokemon, isCapturing, playerData.level, addExp, checkMissions, showNotification, encounterWildPokemon])
-
-  // Función para huir del encuentro
-  const fleeFromPokemon = useCallback(() => {
-    console.log('[FLEE] Huyendo del encuentro...')
-    setCurrentPokemon(null)
-    setCaptureResult(null)
-    setTimeout(() => {
-      encounterWildPokemon()
-    }, 1000)
-  }, [encounterWildPokemon])
-
-  // Inicializar misiones - función separada para evitar recreación
-  const initializeMissions = useCallback(() => {
-    console.log('[MISSIONS] Inicializando misiones...')
-    return [
-      {
-        id: 'first_catch',
-        title: 'Primer Captura',
-        description: 'Captura tu primer Pokémon',
-        target: 1,
-        reward: 100,
-        type: 'catch',
-        progress: 0
-      },
-      {
-        id: 'collector',
-        title: 'Coleccionista',
-        description: 'Captura 5 Pokémon diferentes',
-        target: 5,
-        reward: 250,
-        type: 'catch',
-        progress: 0
-      },
-      {
-        id: 'explorer',
-        title: 'Explorador',
-        description: 'Realiza 10 encuentros',
-        target: 10,
-        reward: 150,
-        type: 'encounter',
-        progress: 0
-      },
-      {
-        id: 'veteran',
-        title: 'Veterano',
-        description: 'Captura 15 Pokémon',
-        target: 15,
-        reward: 500,
-        type: 'catch',
-        progress: 0
-      },
-      {
-        id: 'master',
-        title: 'Maestro Pokémon',
-        description: 'Alcanza el nivel 5',
-        target: 5,
-        reward: 1000,
-        type: 'level',
-        progress: 0
-      }
-    ]
-  }, [])
-
-  // Inicializar el juego - solo una vez
-  useEffect(() => {
-    if (!gameInitialized) {
-      console.log('[INIT] Inicializando juego...')
-      const initialMissions = initializeMissions()
-      setMissions(initialMissions)
-      setGameInitialized(true)
-      
-      // Buscar el primer Pokémon
-      setTimeout(() => {
-        console.log('[INIT] Buscando primer Pokémon...')
-        encounterWildPokemon()
-      }, 1000)
-    }
-  }, [gameInitialized, initializeMissions, encounterWildPokemon])
-
-  return {
-    playerData,
-    currentPokemon,
-    missions,
-    notification,
-    encounterWildPokemon,
-    attemptCapture,
-    fleeFromPokemon,
-    isLoading,
-    isCapturing,
-    captureResult,
-    gameReady: gameInitialized
-  }
+// Añadir al estado inicial del juego
+const initialGameState = {
+  playerData: {
+    // ... otros datos existentes
+    coins: 100, // Añadir monedas iniciales
+    completedMissions: [],
+    missionProgress: {} // Para trackear progreso específico
+  },
+  // ... resto del estado
 }
-export default usePokemonGame;
+
+// Añadir estas funciones al hook usePokemonGame
+
+// Función para generar nuevas misiones
+const generateNewMissions = (completedMissionIds = []) => {
+  const allMissions = [
+    // Misiones básicas
+    { id: 'catch_5', type: 'catch', title: 'Primer Cazador', description: 'Captura 5 Pokémon diferentes', target: 5, reward: { exp: 50, coins: 100 } },
+    { id: 'catch_10', type: 'catch', title: 'Coleccionista', description: 'Captura 10 Pokémon diferentes', target: 10, reward: { exp: 100, coins: 200 } },
+    { id: 'catch_20', type: 'catch', title: 'Maestro Cazador', description: 'Captura 20 Pokémon diferentes', target: 20, reward: { exp: 200, coins: 400 } },
+    
+    { id: 'encounter_10', type: 'encounter', title: 'Explorador', description: 'Encuentra 10 Pokémon salvajes', target: 10, reward: { exp: 30, coins: 50 } },
+    { id: 'encounter_25', type: 'encounter', title: 'Aventurero', description: 'Encuentra 25 Pokémon salvajes', target: 25, reward: { exp: 75, coins: 150 } },
+    { id: 'encounter_50', type: 'encounter', title: 'Explorador Veterano', description: 'Encuentra 50 Pokémon salvajes', target: 50, reward: { exp: 150, coins: 300 } },
+    
+    { id: 'level_3', type: 'level', title: 'Novato', description: 'Alcanza el nivel 3', target: 3, reward: { exp: 100, coins: 150 } },
+    { id: 'level_5', type: 'level', title: 'Entrenador', description: 'Alcanza el nivel 5', target: 5, reward: { exp: 200, coins: 300 } },
+    { id: 'level_10', type: 'level', title: 'Experto', description: 'Alcanza el nivel 10', target: 10, reward: { exp: 500, coins: 750 } },
+    
+    // Misiones avanzadas
+    { id: 'catch_legendary', type: 'catch_rarity', title: 'Leyenda Viviente', description: 'Captura un Pokémon legendario', target: 1, reward: { exp: 1000, coins: 1500 } },
+    { id: 'catch_fire_5', type: 'catch_type', title: 'Maestro del Fuego', description: 'Captura 5 Pokémon de tipo Fuego', target: 5, subtype: 'fire', reward: { exp: 150, coins: 250 } },
+    { id: 'catch_water_5', type: 'catch_type', title: 'Maestro del Agua', description: 'Captura 5 Pokémon de tipo Agua', target: 5, subtype: 'water', reward: { exp: 150, coins: 250 } },
+    { id: 'catch_grass_5', type: 'catch_type', title: 'Maestro de la Naturaleza', description: 'Captura 5 Pokémon de tipo Planta', target: 5, subtype: 'grass', reward: { exp: 150, coins: 250 } },
+    
+    { id: 'daily_catch_3', type: 'daily_catch', title: 'Rutina Diaria', description: 'Captura 3 Pokémon en un día', target: 3, reward: { exp: 100, coins: 200 } },
+    { id: 'perfect_catch_5', type: 'perfect_catch', title: 'Captura Perfecta', description: 'Realiza 5 capturas exitosas consecutivas', target: 5, reward: { exp: 200, coins: 400 } },
+  ]
+  
+  // Filtrar misiones ya completadas y seleccionar algunas activas
+  const availableMissions = allMissions.filter(mission => !completedMissionIds.includes(mission.id))
+  
+  // Seleccionar máximo 6 misiones activas
+  const activeMissions = availableMissions.slice(0, 6)
+  
+  return activeMissions
+}
+
+// Función para completar misión
+const completeMission = useCallback((missionId) => {
+  const mission = missions.find(m => m.id === missionId)
+  if (!mission) return
+
+  setGameState(prevState => {
+    const newCompletedMissions = [...prevState.playerData.completedMissions, missionId]
+    const newPlayerData = {
+      ...prevState.playerData,
+      experience: prevState.playerData.experience + mission.reward.exp,
+      coins: prevState.playerData.coins + mission.reward.coins,
+      completedMissions: newCompletedMissions
+    }
+
+    // Calcular nuevo nivel
+    const newLevel = Math.floor(newPlayerData.experience / 100) + 1
+    newPlayerData.level = newLevel
+
+    // Generar nuevas misiones
+    const newMissions = generateNewMissions(newCompletedMissions)
+
+    // Mostrar notificación
+    showNotification(
+      `🎉 ¡Misión completada! +${mission.reward.exp} EXP, +${mission.reward.coins} monedas`,
+      'success'
+    )
+
+    return {
+      ...prevState,
+      playerData: newPlayerData,
+      missions: newMissions
+    }
+  })
+}, [missions, showNotification])
+
+// Función mejorada para calcular progreso
+const calculateMissionProgress = useCallback((mission, playerData) => {
+  let progress = 0
+  
+  switch (mission.type) {
+    case 'catch':
+      progress = playerData.collection.reduce((unique, pokemon) => {
+        if (!unique.some(p => p.id === pokemon.id)) {
+          unique.push(pokemon)
+        }
+        return unique
+      }, []).length
+      break
+      
+    case 'encounter':
+      progress = playerData.totalEncounters
+      break
+      
+    case 'level':
+      progress = playerData.level
+      break
+      
+    case 'catch_type':
+      progress = playerData.collection.filter(pokemon => 
+        pokemon.types && pokemon.types.some(type => 
+          type.type.name.toLowerCase() === mission.subtype
+        )
+      ).length
+      break
+      
+    case 'catch_rarity':
+      // Pokémon legendarios tienen stats base muy altas
+      progress = playerData.collection.filter(pokemon => 
+        pokemon.base_experience > 250
+      ).length
+      break
+      
+    case 'daily_catch':
+      // Necesitarías implementar tracking de capturas diarias
+      const today = new Date().toDateString()
+      progress = playerData.dailyCatches?.[today] || 0
+      break
+      
+    case 'perfect_catch':
+      progress = playerData.consecutiveCatches || 0
+      break
+      
+    default:
+      progress = 0
+  }
+  
+  return Math.min(progress, mission.target)
+}, [])
+
+// Función para verificar misiones completadas
+const checkMissionCompletion = useCallback(() => {
+  missions.forEach(mission => {
+    if (!playerData.completedMissions.includes(mission.id)) {
+      const progress = calculateMissionProgress(mission, playerData)
+      if (progress >= mission.target) {
+        completeMission(mission.id)
+      }
+    }
+  })
+}, [missions, playerData, calculateMissionProgress, completeMission])
+
+// Llamar a checkMissionCompletion cuando cambie el playerData
+useEffect(() => {
+  if (gameReady) {
+    checkMissionCompletion()
+  }
+}, [playerData, checkMissionCompletion, gameReady])
+
+// Inicializar misiones al cargar el juego
+useEffect(() => {
+  if (gameReady && missions.length === 0) {
+    const initialMissions = generateNewMissions()
+    setGameState(prevState => ({
+      ...prevState,
+      missions: initialMissions
+    }))
+  }
+}, [gameReady, missions.length])
+
+// Retornar las funciones necesarias del hook
+return {
+  // ... otras funciones existentes
+  calculateMissionProgress,
+  completeMission,
+  // ... resto de returns
+}
